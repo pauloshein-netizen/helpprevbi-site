@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cantinho do Alívio — HelpPrev BI</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  body { padding-bottom: 20px; }
+  .relief-wrap { max-width: 1100px; margin: 0 auto; padding: 20px 24px 40px; }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <span class="brand-dot"></span>
+      <div>
+        <div class="brand-mark-sm">HELPPREV</div>
+        <div class="brand-sub">HUB PREV V1</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+        Início
+      </a>
+      <a href="gerador-de-despachos.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        Despachos
+      </a>
+      <a href="gerador-de-exigencias.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 12l2 2 4-4"/></svg>
+        Exigências
+      </a>
+      <a href="gerador-tele-pericia.exe" class="nav-item" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Tele Perícia
+      </a>
+      <a href="cantinho-do-alivio.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        Cantinho do Alívio
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-footer">
+      <div class="status-box"><span class="status-dot"></span> Sistema operacional</div>
+      <div class="sidebar-logo-wrap"><img src="assets/phsh-logo.png" alt="PHSH"></div>
+      <div class="sidebar-credit"><strong>paulo.hein</strong><br>SARD BI GEXSTM</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="Buscar ferramenta...">
+        <span class="kbd">CTRL K</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
+          <div>
+            <h1 class="page-title">Cantinho do Alívio</h1>
+            <div class="page-badges">
+              <span class="status-pill">Disponível</span>
+              <span class="page-subtitle">Pausa e descompressão</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<div class="relief-wrap">
+<div style="font-family: Arial; max-width:1100px; margin:auto; padding:20px; border-radius:12px; background:#f5f7fa; text-align:center;">
+
+  <h2 style="color:#1a73e8;">
+    💻❌ Sistema indisponível? Vem pro cantinho 😄
+  </h2>
+
+  <p style="color:#555; font-size:18px; font-weight:bold;">
+    Respira, relaxa… e tenta não jogar o teclado pela janela 😂
+  </p>
+
+  <div style="background:#fff; border:1px dashed #1a73e8; border-radius:10px; padding:14px 20px; margin:0 0 25px; min-height:26px;">
+    <p id="fraseRotativa" style="margin:0; color:#1a73e8; font-weight:bold; font-size:16px; transition:opacity 0.4s;"></p>
+  </div>
+
+  <div style="display:flex; gap:30px;">
+
+    <!-- DESABAFO -->
+    <div style="flex:1;">
+      <h3>😤 DESABAFO</h3>
+
+      <textarea id="stressBox"
+        oninput="textoMaluco(this)"
+        placeholder="DIGITE AQUI..."
+        style="width:100%; height:180px; border-radius:10px; border:1px solid #ccc; padding:12px; font-size:20px; font-weight:bold;">
+      </textarea>
+
+      <br><br>
+
+      <button onclick="limparTexto()" 
+        style="padding:10px 25px; border:none; border-radius:8px; background:#1a73e8; color:white;">
+        LIMPAR MENTE
+      </button>
+    </div>
+
+    <!-- RESPIRAÇÃO -->
+    <div style="flex:1;">
+      <h3>🧘 RESPIRAÇÃO ANTI-RAIVA</h3>
+
+      <div id="balaoResp"
+        style="width:80px; height:80px; margin:auto; border-radius:50%; background:#34a853; transition:1.5s;">
+      </div>
+
+      <p id="respiracaoTexto">Clique para começar</p>
+
+      <button onclick="respirarAnimado()" 
+        style="padding:10px 25px; border:none; border-radius:8px; background:#34a853; color:white;">
+        INICIAR
+      </button>
+    </div>
+
+  </div>
+
+  <hr style="margin:30px 0;">
+
+  <!-- JOGOS -->
+  <h3>🎮 Escolha seu desestresse</h3>
+
+  <div style="display:flex; gap:10px; justify-content:center; margin-bottom:16px; flex-wrap:wrap;">
+    <button class="tab-btn" data-tab="baloes" onclick="mudarAba('baloes')"
+      style="padding:9px 18px; border:none; border-radius:20px; background:#1a73e8; color:white; font-weight:bold; cursor:pointer;">
+      🎈 Balões
+    </button>
+    <button class="tab-btn" data-tab="velha" onclick="mudarAba('velha')"
+      style="padding:9px 18px; border:none; border-radius:20px; background:#ccc; color:#333; font-weight:bold; cursor:pointer;">
+      ❌⭕ Jogo da Velha
+    </button>
+  </div>
+
+  <!-- ABA: BALÕES -->
+  <div id="painel-baloes" class="painel-jogo">
+    <div id="areaJogo" style="position:relative; height:300px; background:#e3e7ee; border-radius:10px; overflow:hidden;">
+    </div>
+    <p id="pontuacao">Pontuação: 0</p>
+  </div>
+
+  <!-- ABA: JOGO DA VELHA -->
+  <div id="painel-velha" class="painel-jogo" style="display:none;">
+    <p id="statusVelha" style="font-weight:bold; font-size:16px; color:#1a73e8;">Sua vez — você é o ❌</p>
+    <div id="tabuleiroVelha" style="display:grid; grid-template-columns:repeat(3,80px); grid-template-rows:repeat(3,80px); gap:6px; justify-content:center; margin:16px auto;">
+    </div>
+    <p style="font-size:13px; color:#888;">Placar da sessão — Você: <span id="scoreJogador">0</span> · Sistema: <span id="scoreSistema">0</span> · Empates: <span id="scoreEmpate">0</span></p>
+    <button onclick="reiniciarVelha()"
+      style="padding:9px 20px; border:none; border-radius:8px; background:#1a73e8; color:white; font-weight:bold; cursor:pointer;">
+      Reiniciar partida
+    </button>
+  </div>
+
+</div>
+</div>
+
+      <footer class="site-footer">
+        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> / SARD BI GEXSTM
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function limparTexto() {
+  document.getElementById("stressBox").value = "";
+}
+
+// TEXTO MALUCO (EFEITO ENGRAÇADO)
+function textoMaluco(el) {
+  el.value = el.value.toUpperCase();
+
+  if (Math.random() < 0.25) {
+    const extras = ["!", "@", "#", "$", "%", "&", "??", "!!!", "###"];
+    el.value += extras[Math.floor(Math.random() * extras.length)];
+  }
+}
+
+// RESPIRAÇÃO COM BALÃO
+function respirarAnimado() {
+  let balao = document.getElementById("balaoResp");
+  let texto = document.getElementById("respiracaoTexto");
+
+  let ciclos = 0;
+
+  let intervalo = setInterval(() => {
+
+    texto.innerHTML = "INSPIRE...";
+    balao.style.transform = "scale(1.6)";
+
+    setTimeout(() => {
+      texto.innerHTML = "EXPIRE...";
+      balao.style.transform = "scale(1)";
+    }, 2000);
+
+    ciclos++;
+
+    if (ciclos >= 7) {
+      clearInterval(intervalo);
+      texto.innerHTML = "RELAXOU 😄";
+    }
+
+  }, 4000);
+}
+
+// JOGO BALÃO ÚNICO
+let pontos = 0;
+let balaoAtual = null;
+
+function criarBalao() {
+
+  if (balaoAtual) return;
+
+  let area = document.getElementById("areaJogo");
+
+  let balao = document.createElement("div");
+
+  // corpo do balão
+  balao.style.position = "absolute";
+  balao.style.bottom = "0px";
+  balao.style.left = Math.random() * 80 + "%";
+  balao.style.width = "50px";
+  balao.style.height = "60px";
+  balao.style.borderRadius = "50%";
+  balao.style.background = "#1a73e8";
+  balao.style.color = "white";
+  balao.style.display = "flex";
+  balao.style.alignItems = "center";
+  balao.style.justifyContent = "center";
+  balao.style.fontWeight = "bold";
+  balao.style.cursor = "pointer";
+
+  balao.innerHTML = "DTP";
+
+  // corda
+  let corda = document.createElement("div");
+  corda.style.position = "absolute";
+  corda.style.bottom = "-20px";
+  corda.style.left = "50%";
+  corda.style.width = "2px";
+  corda.style.height = "20px";
+  corda.style.background = "#555";
+
+  balao.appendChild(corda);
+
+  area.appendChild(balao);
+  balaoAtual = balao;
+
+  let velocidade = 2000 + Math.random() * 2000;
+
+  balao.animate([
+    { transform: "translateY(0px)" },
+    { transform: "translateY(-260px)" }
+  ], {
+    duration: velocidade,
+    easing: "linear"
+  });
+
+  balao.onclick = function() {
+    balao.innerHTML = "💥";
+    balao.style.background = "transparent";
+    pontos++;
+    document.getElementById("pontuacao").innerHTML = "Pontuação: " + pontos;
+
+    setTimeout(() => {
+      balao.remove();
+      balaoAtual = null;
+    }, 200);
+  };
+
+  setTimeout(() => {
+    if (balaoAtual) {
+      balao.remove();
+      balaoAtual = null;
+    }
+  }, velocidade);
+}
+
+// loop
+setInterval(criarBalao, 1500);
+
+/* ============ FRASES ROTATIVAS ============ */
+const frases = [
+  "Respira. O protocolo não vai fugir — a menos que o sistema caia de novo.",
+  "Você é mais forte que qualquer erro 500.",
+  "Isso também passa. Assim como a instabilidade do sistema.",
+  "Levanta, alonga, e volta com a régua na mão.",
+  "Se o sistema travou, a culpa não é sua. Provavelmente.",
+  "Beba água. Não resolve o protocolo, mas ajuda você.",
+  "Você já sobreviveu a 100% dos seus dias de sistema fora do ar até agora.",
+  "Café não resolve tudo, mas ajuda a fingir que sim.",
+  "Reclamar em silêncio também é uma forma de meditação.",
+  "Um despacho de cada vez. Ou um suspiro de cada vez.",
+  "A paciência é uma habilidade. E você está treinando bastante hoje.",
+  "Daqui a pouco isso vira uma boa história pra contar."
+];
+let fraseIndex = -1;
+
+function proximaFrase() {
+  let novoIndex;
+  do { novoIndex = Math.floor(Math.random() * frases.length); } while (novoIndex === fraseIndex && frases.length > 1);
+  fraseIndex = novoIndex;
+
+  const el = document.getElementById("fraseRotativa");
+  el.style.opacity = 0;
+  setTimeout(() => {
+    el.innerHTML = "💬 " + frases[fraseIndex];
+    el.style.opacity = 1;
+  }, 400);
+}
+
+proximaFrase();
+setInterval(proximaFrase, 7000);
+
+/* ============ ABAS ============ */
+function mudarAba(nome) {
+  ['baloes', 'velha'].forEach(n => {
+    document.getElementById('painel-' + n).style.display = (n === nome) ? 'block' : 'none';
+    const btn = document.querySelector('.tab-btn[data-tab="' + n + '"]');
+    btn.style.background = (n === nome) ? '#1a73e8' : '#ccc';
+    btn.style.color = (n === nome) ? 'white' : '#333';
+  });
+}
+
+/* ============ JOGO DA VELHA ============ */
+let tabuleiro = Array(9).fill("");
+let jogoAtivo = true;
+let scoreJogador = 0, scoreSistema = 0, scoreEmpate = 0;
+
+function montarTabuleiroVelha() {
+  const tab = document.getElementById("tabuleiroVelha");
+  tab.innerHTML = "";
+  for (let i = 0; i < 9; i++) {
+    const cel = document.createElement("div");
+    cel.dataset.i = i;
+    cel.style.width = "80px";
+    cel.style.height = "80px";
+    cel.style.background = "#fff";
+    cel.style.border = "2px solid #1a73e8";
+    cel.style.borderRadius = "8px";
+    cel.style.display = "flex";
+    cel.style.alignItems = "center";
+    cel.style.justifyContent = "center";
+    cel.style.fontSize = "34px";
+    cel.style.fontWeight = "bold";
+    cel.style.cursor = "pointer";
+    cel.style.color = "#1a73e8";
+    cel.textContent = tabuleiro[i];
+    cel.onclick = () => jogadaJogador(i);
+    tab.appendChild(cel);
+  }
+}
+
+const linhasVitoria = [
+  [0,1,2],[3,4,5],[6,7,8],
+  [0,3,6],[1,4,7],[2,5,8],
+  [0,4,8],[2,4,6]
+];
+
+function checarVencedor(t) {
+  for (const [a,b,c] of linhasVitoria) {
+    if (t[a] && t[a] === t[b] && t[b] === t[c]) return t[a];
+  }
+  if (t.every(v => v !== "")) return "empate";
+  return null;
+}
+
+function jogadaJogador(i) {
+  if (!jogoAtivo || tabuleiro[i] !== "") return;
+  tabuleiro[i] = "❌";
+  montarTabuleiroVelha();
+
+  let resultado = checarVencedor(tabuleiro);
+  if (resultado) { finalizarVelha(resultado); return; }
+
+  document.getElementById("statusVelha").innerHTML = "Sistema pensando... 🤖";
+  jogoAtivo = false;
+  setTimeout(jogadaSistema, 500);
+}
+
+function jogadaSistema() {
+  let i = melhorJogadaSistema();
+  if (i !== -1) tabuleiro[i] = "⭕";
+  montarTabuleiroVelha();
+
+  let resultado = checarVencedor(tabuleiro);
+  if (resultado) { finalizarVelha(resultado); return; }
+
+  jogoAtivo = true;
+  document.getElementById("statusVelha").innerHTML = "Sua vez — você é o ❌";
+}
+
+function melhorJogadaSistema() {
+  // 1. Tenta vencer
+  for (const [a,b,c] of linhasVitoria) {
+    const linha = [tabuleiro[a], tabuleiro[b], tabuleiro[c]];
+    const idx = [a,b,c];
+    if (linha.filter(v => v === "⭕").length === 2 && linha.includes("")) {
+      return idx[linha.indexOf("")];
+    }
+  }
+  // 2. Bloqueia jogador
+  for (const [a,b,c] of linhasVitoria) {
+    const linha = [tabuleiro[a], tabuleiro[b], tabuleiro[c]];
+    const idx = [a,b,c];
+    if (linha.filter(v => v === "❌").length === 2 && linha.includes("")) {
+      return idx[linha.indexOf("")];
+    }
+  }
+  // 3. Centro
+  if (tabuleiro[4] === "") return 4;
+  // 4. Cantos
+  const cantos = [0,2,6,8].filter(i => tabuleiro[i] === "");
+  if (cantos.length) return cantos[Math.floor(Math.random() * cantos.length)];
+  // 5. Qualquer livre
+  const livres = tabuleiro.map((v,i) => v === "" ? i : -1).filter(i => i !== -1);
+  return livres.length ? livres[Math.floor(Math.random() * livres.length)] : -1;
+}
+
+function finalizarVelha(resultado) {
+  jogoAtivo = false;
+  if (resultado === "❌") {
+    scoreJogador++;
+    document.getElementById("statusVelha").innerHTML = "Você venceu! 🎉";
+  } else if (resultado === "⭕") {
+    scoreSistema++;
+    document.getElementById("statusVelha").innerHTML = "O sistema venceu dessa vez. 🤖";
+  } else {
+    scoreEmpate++;
+    document.getElementById("statusVelha").innerHTML = "Empate! Ninguém travou. 🤝";
+  }
+  document.getElementById("scoreJogador").innerHTML = scoreJogador;
+  document.getElementById("scoreSistema").innerHTML = scoreSistema;
+  document.getElementById("scoreEmpate").innerHTML = scoreEmpate;
+}
+
+function reiniciarVelha() {
+  tabuleiro = Array(9).fill("");
+  jogoAtivo = true;
+  document.getElementById("statusVelha").innerHTML = "Sua vez — você é o ❌";
+  montarTabuleiroVelha();
+}
+
+montarTabuleiroVelha();
+
+</script>
+</body>
+</html>

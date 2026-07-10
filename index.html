@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HelpPrev — Central de Automação Previdenciária</title>
+<meta name="description" content="Ferramentas de apoio à análise previdenciária: gerador de despachos, gerador de exigências e mais.">
+<link rel="stylesheet" href="style.css">
+<style>
+  .hero-block {
+    max-width: 760px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.55s ease both;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 12px;
+  }
+  .hero-block h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    text-transform: uppercase;
+  }
+  .hero-block p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  .tools {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .tools { grid-template-columns: repeat(4, 1fr); }
+    .tool-card.span-2 { grid-column: span 2; }
+    .tool-card.span-4 { grid-column: span 4; }
+  }
+
+  .tool-card {
+    background: var(--paper-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px 22px;
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.55s ease both;
+  }
+  .tool-card:nth-child(1) { animation-delay: 0.05s; }
+  .tool-card:nth-child(2) { animation-delay: 0.1s; }
+  .tool-card:nth-child(3) { animation-delay: 0.15s; }
+  .tool-card:nth-child(4) { animation-delay: 0.2s; }
+
+  .tool-card-top { display: flex; align-items: center; justify-content: space-between; }
+
+  .tool-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--gold-soft);
+    border: 1px solid rgba(59,110,246,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tool-icon svg { width: 19px; height: 19px; color: var(--gold); }
+
+  .tool-tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 100px;
+  }
+  .tool-tag.on { background: rgba(34,197,94,0.12); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
+  .tool-tag.soon { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(59,110,246,0.3); }
+
+  .tool-card h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.12rem;
+    margin: 4px 0 0;
+    letter-spacing: -0.005em;
+  }
+  .tool-card p {
+    font-size: 0.87rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0;
+    flex-grow: 1;
+  }
+  .tool-arrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink);
+    transition: transform 0.18s ease, color 0.18s ease;
+  }
+  .tool-card:hover { transform: translateY(-3px); border-color: var(--gold); background: var(--paper-card-hover); }
+  .tool-card:hover .tool-arrow { transform: translateX(3px); color: var(--gold); }
+  .tool-card:active { transform: translateY(-1px) scale(0.99); }
+
+  @media (min-width: 720px) {
+    .tool-card.span-4 { flex-direction: row; align-items: center; gap: 20px; }
+    .tool-card.span-4 .tool-card-top { flex-direction: column-reverse; align-items: flex-start; gap: 8px; }
+    .tool-card.span-4 h2 { min-width: 220px; margin: 0; }
+    .tool-card.span-4 p { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <span class="brand-dot"></span>
+      <div>
+        <div class="brand-mark-sm">HELPPREV</div>
+        <div class="brand-sub">HUB PREV V1</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+        Início
+      </a>
+      <a href="gerador-de-despachos.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        Despachos
+      </a>
+      <a href="gerador-de-exigencias.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 12l2 2 4-4"/></svg>
+        Exigências
+      </a>
+      <a href="gerador-tele-pericia.exe" class="nav-item" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Tele Perícia
+      </a>
+      <a href="cantinho-do-alivio.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        Cantinho do Alívio
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-footer">
+      <div class="status-box"><span class="status-dot"></span> Sistema operacional</div>
+      <div class="sidebar-logo-wrap"><img src="assets/phsh-logo.png" alt="PHSH"></div>
+      <div class="sidebar-credit"><strong>paulo.hein</strong><br>SARD BI GEXSTM</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Buscar ferramenta...">
+        <span class="kbd">CTRL K</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <div class="hero-block">
+        <p class="hero-eyebrow">Ferramentas internas de apoio</p>
+        <h1>Central de automação de análises previdenciárias</h1>
+        <p>Selecione as situações aplicáveis ao protocolo e receba o texto pronto para uso — despachos, exigências e outras análises geradas a partir de blocos padronizados.</p>
+      </div>
+
+      <nav class="tools" aria-label="Ferramentas disponíveis" id="tools-grid">
+
+        <a class="tool-card span-2" href="gerador-de-despachos.html" data-search="gerador de despachos administrativo protocolo">
+          <div class="tool-card-top">
+            <div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></div>
+            <span class="tool-tag on">Operacional</span>
+          </div>
+          <h2>Gerador de Despachos</h2>
+          <p>Crie despachos administrativos de forma rápida e padronizada.</p>
+          <span class="tool-arrow">Acessar →</span>
+        </a>
+
+        <a class="tool-card" href="gerador-de-exigencias.html" data-search="gerador de exigencias segurado">
+          <div class="tool-card-top">
+            <div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <span class="tool-tag on">Operacional</span>
+          </div>
+          <h2>Gerador de Exigências</h2>
+          <p>Elabore exigências claras e objetivas para o segurado.</p>
+          <span class="tool-arrow">Acessar →</span>
+        </a>
+
+        <a class="tool-card" href="gerador-tele-pericia.exe" download data-search="gerador de tele pericia download">
+          <div class="tool-card-top">
+            <div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg></div>
+            <span class="tool-tag on">Operacional</span>
+          </div>
+          <h2>Gerador de Tele Perícia</h2>
+          <p>Baixe a ferramenta para geração automatizada da Tele Perícia.</p>
+          <span class="tool-arrow">Download →</span>
+        </a>
+
+        <a class="tool-card span-4" href="cantinho-do-alivio.html" data-search="cantinho do alivio descompressao jogos">
+          <div class="tool-card-top">
+            <div class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div>
+            <span class="tool-tag on">Disponível</span>
+          </div>
+          <h2>Cantinho do Alívio</h2>
+          <p>Sistema travou? Protocolo não carrega? Respire, desabafe e estoure uns balões antes de voltar ao trabalho.</p>
+          <span class="tool-arrow">Abrir →</span>
+        </a>
+
+      </nav>
+
+      <footer class="site-footer">
+        <div class="site-footer-with-logo">
+          <div class="footer-text">
+            HelpPrev © 2026 · Sistema de apoio à análise previdenciária<br>
+            Desenvolvido por <strong>paulo.hein</strong> para uso administrativo interno
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('search-input');
+  const cards = document.querySelectorAll('#tools-grid .tool-card');
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim().toLowerCase();
+    cards.forEach(card => {
+      const haystack = (card.dataset.search || '') + ' ' + card.innerText.toLowerCase();
+      card.style.display = haystack.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      searchInput.focus();
+    }
+  });
+</script>
+
+</body>
+</html>

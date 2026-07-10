@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Paulo Henrique Salatti Hein / SARD BI GEXSTM">
+    <title>Gerador de Despacho Administrativo — HelpPrev BI</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body { padding-bottom: 40px; }
+
+        .container {
+            max-width: 760px;
+            background: var(--paper-card);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
+        }
+
+        .instructions-line { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 20px; }
+        .instructions-line strong { color: var(--ink); }
+
+        .item-group { margin-bottom: 15px; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+        .item-group:last-of-type { border-bottom: none; }
+
+        .protocolo-group { margin-bottom: 20px; padding: 15px 16px; background-color: var(--gold-soft); border-left: 4px solid var(--gold); border-radius: 7px; }
+        .protocolo-group label { font-size: 0.85rem; color: var(--ink-soft); display: block; margin-bottom: 6px; }
+        .protocolo-group input[type="text"] { width: 100%; padding: 10px 11px; border: 1.5px solid var(--line); border-radius: 7px; font-size: 0.95rem; box-sizing: border-box; font-family: var(--font-mono); background: var(--paper); color: var(--ink); }
+        .protocolo-group input[type="text"]:focus { border-color: var(--focus); }
+
+        label { display: flex; align-items: flex-start; cursor: pointer; font-size: 0.94rem; margin-bottom: 6px; color: var(--ink); line-height: 1.5; }
+        input[type="checkbox"] { margin-top: 4px; margin-right: 10px; transform: scale(1.15); cursor: pointer; accent-color: var(--gold); flex-shrink: 0; }
+
+        .extra-input { margin-top: 10px; margin-left: 28px; display: none; background: var(--paper); padding: 12px 14px; border-left: 3px solid var(--gold); border-radius: 0 7px 7px 0; }
+        .extra-input input[type="text"], .extra-input select {
+            width: 100%; padding: 9px 10px; margin-top: 5px; border: 1.5px solid var(--line); border-radius: 7px;
+            box-sizing: border-box; font-family: var(--font-body); font-size: 0.9rem; background: var(--paper-card); color: var(--ink);
+        }
+        .extra-input input[type="text"]:focus, .extra-input select:focus { border-color: var(--focus); }
+        .extra-input label { font-size: 0.78rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.03em; display: block; margin-bottom: 2px; }
+
+        .lista-motivos { background: var(--paper-card); padding: 12px 14px; border: 1px solid var(--line); border-radius: 7px; margin-top: 10px; }
+        .lista-motivos label { font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; }
+        .lista-motivos > label:first-child { font-size: 0.78rem; color: var(--alert); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 10px; display: block; }
+
+        .item-highlight { background-color: var(--alert-soft); border-left: 4px solid var(--alert); padding: 14px 16px; margin-top: 20px; border-radius: 7px; border-bottom: none; }
+        .item-highlight label { font-weight: 600; color: var(--alert); }
+
+        .result-heading { font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin: 26px 0 10px; }
+
+        textarea { width: 100%; height: 350px; padding: 16px; border: 1.5px solid var(--line); border-radius: var(--radius); font-size: 0.92rem; resize: vertical; background-color: var(--paper-card); box-sizing: border-box; font-family: var(--font-body); line-height: 1.6; color: var(--ink); box-shadow: var(--shadow-card); }
+        textarea:focus { border-color: var(--focus); }
+
+        .botoes { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        button { padding: 12px 22px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; font-family: var(--font-body); color: white; flex: 1; transition: 0.15s ease; min-width: 160px; }
+        button:hover { opacity: 0.88; }
+        button:active { transform: scale(0.98); }
+        .btn-limpar { background-color: transparent; color: var(--alert); border: 1.5px solid var(--alert); }
+        .btn-limpar:hover { background: var(--alert-soft); opacity: 1; }
+        .btn-copiar { background-color: var(--gold); color: #fff; }
+        .btn-copiar:hover { background-color: var(--focus); }
+    </style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <span class="brand-dot"></span>
+      <div>
+        <div class="brand-mark-sm">HELPPREV</div>
+        <div class="brand-sub">HUB PREV V1</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+        Início
+      </a>
+      <a href="gerador-de-despachos.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        Despachos
+      </a>
+      <a href="gerador-de-exigencias.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 12l2 2 4-4"/></svg>
+        Exigências
+      </a>
+      <a href="gerador-tele-pericia.exe" class="nav-item" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Tele Perícia
+      </a>
+      <a href="cantinho-do-alivio.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        Cantinho do Alívio
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-footer">
+      <div class="status-box"><span class="status-dot"></span> Sistema operacional</div>
+      <div class="sidebar-logo-wrap"><img src="assets/phsh-logo.png" alt="PHSH"></div>
+      <div class="sidebar-credit"><strong>paulo.hein</strong><br>SARD BI GEXSTM</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="Buscar ferramenta...">
+        <span class="kbd">CTRL K</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></div>
+          <div>
+            <h1 class="page-title">Gerador de Despachos</h1>
+            <div class="page-badges">
+              <span class="status-pill">Operacional</span>
+              <span class="page-subtitle">Despacho administrativo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="container">
+
+        <p class="instructions-line"><strong>Instruções:</strong> insira o número do protocolo, selecione os itens aplicáveis e preencha as informações adicionais quando solicitado.</p>
+
+        <form id="despachoForm">
+            <div class="protocolo-group">
+                <label>Protocolo de análise:</label>
+                <input type="text" id="numProtocolo" placeholder="Digite o número do protocolo..." oninput="gerarDespacho()">
+            </div>
+
+            <div class="item-group"><label><input type="checkbox" id="item1" onchange="gerarDespacho()"> 1. Houve alteração de dados cadastrais</label></div>
+
+            <div class="item-group">
+                <label><input type="checkbox" id="item2" onchange="toggleInput('extra2'); gerarDespacho()"> 2. Houve correção de vínculo empregatício no CNIS.</label>
+                <div id="extra2" class="extra-input"><input type="text" id="infoVinculo" placeholder="Ex: Empresa X, período Y..." oninput="gerarDespacho()"></div>
+            </div>
+
+            <div class="item-group">
+                <label><input type="checkbox" id="item5" onchange="toggleInput('extra5'); gerarDespacho()"> 3. Alterada a DUT.</label>
+                <div id="extra5" class="extra-input">
+                    <label>Com base em:</label>
+                    <select id="fonteDUT" onchange="gerarDespacho()">
+                        <option value="conforme informações de afastamento constantes no CNIS">Informações de Afastamento (CNIS)</option>
+                        <option value="conforme Declaração do Empregador apresentada">Declaração do Empregador</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="item-group">
+                <label><input type="checkbox" id="item3" onchange="toggleInput('extra3'); gerarDespacho()"> 4. Houve complementação de contribuições de Contribuinte Individual.</label>
+                <div id="extra3" class="extra-input"><input type="text" id="compCI" placeholder="Ex: 01/2025, 02/2025..." oninput="gerarDespacho()"></div>
+            </div>
+
+            <div class="item-group">
+                <label><input type="checkbox" id="item4" onchange="toggleInput('extra4'); gerarDespacho()"> 5. Houve complementação de contribuições de Facultativo.</label>
+                <div id="extra4" class="extra-input"><input type="text" id="compFac" placeholder="Ex: 06/2025..." oninput="gerarDespacho()"></div>
+            </div>
+
+            <div class="item-group">
+                <label><input type="checkbox" id="item6" onchange="toggleInput('extra6'); gerarDespacho()"> 6. Análise de Segurado Especial.</label>
+                <div id="extra6" class="extra-input">
+                    <label>Resultado da Análise:</label>
+                    <select id="resultadoRural" onchange="toggleMotivosRural(); gerarDespacho()">
+                        <option value="integral">Todo o período autodeclarado foi reconhecido</option>
+                        <option value="parcial">Somente parte do período autodeclarado foi reconhecido</option>
+                        <option value="negado">Nenhum período autodeclarado foi reconhecido</option>
+                    </select>
+
+                    <div id="divInfoRural" style="margin-top: 10px;">
+                        <input type="text" id="infoRural" placeholder="Períodos, anotações (Opcional)..." oninput="gerarDespacho()">
+                    </div>
+
+                    <div id="divMotivosNegativa" class="lista-motivos" style="display: none;">
+                        <label>Selecione os motivos do não reconhecimento:</label>
+                        <label><input type="checkbox" class="chk-motivo" value="Não há documentos ratificadores contemporâneos" onchange="gerarDespacho()"> Não há documentos ratificadores contemporâneos</label>
+                        <label><input type="checkbox" class="chk-motivo" value="Não apresentou Autodeclaração do Trabalhador Rural" onchange="gerarDespacho()"> Não apresentou Autodeclaração do Trabalhador Rural</label>
+                        <label><input type="checkbox" class="chk-motivo" value="Documentos em nome de terceiros não compõem o Grupo Familiar" onchange="gerarDespacho()"> Documentos em nome de terceiros não compõem o Grupo Familiar</label>
+                        <label><input type="checkbox" class="chk-motivo" value="Exercício de Atividade Remunerada/Urbana, sem comprovação de retorno à Atividade Rural" onchange="gerarDespacho()"> Exercício de Atividade Remunerada/Urbana, sem comprovação de retorno</label>
+                        <label><input type="checkbox" class="chk-motivo" value="Área explorada superior a 4 Módulos Fiscais" onchange="gerarDespacho()"> Área explorada superior a 4 Módulos Fiscais</label>
+                        <label><input type="checkbox" class="chk-motivo" value="Exercício de atividade Turística ou utilização de Mão de Obra" onchange="gerarDespacho()"> Exercício de atividade Turística ou utilização de Mão de Obra</label>
+                        <label><input type="checkbox" class="chk-motivo" value="Não participa ativamente das atividades rurais do Grupo Familiar" onchange="gerarDespacho()"> Não participa ativamente das atividades rurais do Grupo Familiar</label>
+                        <label><input type="checkbox" class="chk-motivo" value="Outorga em contrato de mais de 50% do imóvel e/ou sem atividade rural pelos contratantes" onchange="gerarDespacho()"> Outorga em contrato de mais de 50% do imóvel e/ou sem atividade rural</label>
+
+                        <label><input type="checkbox" id="chkCNPJRural" onchange="toggleCNPJInput(); gerarDespacho()"> Possui CNPJ ativo</label>
+                        <div id="divCNPJRural" style="display: none; margin-left: 28px; margin-bottom: 10px;">
+                            <input type="text" id="numCNPJRural" maxlength="18" placeholder="Ex: 00.000.000/0000-00" style="width: 90%; padding: 6px; border: 1px solid var(--line); border-radius: 6px;" oninput="this.value = mascaraCNPJ(this.value); gerarDespacho()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item-group item-highlight">
+                <label><input type="checkbox" id="item7" onchange="gerarDespacho()"> <strong>7. Vínculos não tratados (Benefício por Incapacidade)</strong></label>
+            </div>
+        </form>
+
+        <p class="result-heading">Despacho gerado</p>
+        <textarea id="resultado" readonly></textarea>
+
+        <div class="botoes">
+            <button type="button" class="btn-copiar" onclick="copiarTexto(this)">Copiar Despacho</button>
+            <button type="button" class="btn-limpar" onclick="limparDados()">Limpar Formulário</button>
+        </div>
+    </div>
+
+      <footer class="site-footer">
+        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> / SARD BI GEXSTM · Versão 3.3
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script>
+    window.onload = function () { gerarDespacho(); };
+
+    document.getElementById("despachoForm").addEventListener("submit", function(e){ e.preventDefault(); });
+
+    function toggleInput(id) {
+        const div = document.getElementById(id);
+        div.style.display = div.style.display === "block" ? "none" : "block";
+        if (id === 'extra6' && div.style.display === "block") { toggleMotivosRural(); }
+    }
+
+    function toggleMotivosRural() {
+        const select = document.getElementById('resultadoRural');
+        const divInfo = document.getElementById('divInfoRural');
+        const divMotivos = document.getElementById('divMotivosNegativa');
+        if (select.value === 'negado') {
+            divInfo.style.display = "none";
+            divMotivos.style.display = "block";
+        } else {
+            divInfo.style.display = "block";
+            divMotivos.style.display = "none";
+            document.querySelectorAll('.chk-motivo').forEach(cb => cb.checked = false);
+            document.getElementById('chkCNPJRural').checked = false;
+            toggleCNPJInput();
+        }
+    }
+
+    function toggleCNPJInput() {
+        const divCNPJ = document.getElementById('divCNPJRural');
+        const chkCNPJ = document.getElementById('chkCNPJRural');
+        if (chkCNPJ.checked) { divCNPJ.style.display = "block"; } else { divCNPJ.style.display = "none"; document.getElementById('numCNPJRural').value = ""; }
+    }
+
+    function mascaraCNPJ(v) {
+        v = v.replace(/\D/g, "");
+        if (v.length > 2) v = v.replace(/^(\d{2})(\d)/, "$1.$2");
+        if (v.length > 5) v = v.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
+        if (v.length > 8) v = v.replace(/\.(\d{3})(\d)/, ".$1/$2");
+        if (v.length > 12) v = v.replace(/(\d{4})(\d)/, "$1-$2");
+        return v.substring(0, 18);
+    }
+
+    function gerarDespacho() {
+        let protocolo = document.getElementById('numProtocolo').value.trim();
+        let despacho = (protocolo !== "") ? "Realizada a análise administrativa do protocolo " + protocolo + " — com a verificação dos documentos apresentados e das informações dos sistemas de benefícios —, informamos que foram realizados os seguintes procedimentos:\n\n" : "Realizada a análise administrativa — com a verificação dos documentos apresentados e das informações dos sistemas de benefícios —, informamos que foram realizados os seguintes procedimentos:\n\n";
+
+        // 1. DADOS CADASTRAIS
+        despacho += document.getElementById('item1').checked
+            ? "- Houve alteração de dados cadastrais, conforme IN 128/2022 artigo 32.\n"
+            : "- Não houve necessidade de alteração de dados cadastrais;\n";
+
+        // 2. VÍNCULOS
+        if (document.getElementById('item2').checked) {
+            let info = document.getElementById('infoVinculo').value.trim();
+            despacho += "- Houve correção de vínculo empregatício (ajustes realizados estritamente para fins de análise do direito ao benefício). " + (info ? "Informações: " + info + "\n" : "\n");
+        } else { despacho += "- Não houve correção de vínculo empregatício;\n"; }
+
+        // 3. DUT (ITEM 5 NO FORM)
+        despacho += document.getElementById('item5').checked
+            ? "- Alterada a DUT " + document.getElementById('fonteDUT').value + ".\n"
+            : "- Não foi alterada a DUT;\n";
+
+        // 4. INDIVIDUAL (ITEM 3 NO FORM)
+        if (document.getElementById('item3').checked) {
+            let info = document.getElementById('compCI').value.trim();
+            despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Contribuinte Individual (ajustes realizados estritamente para fins de análise do direito ao benefício).\n";
+        } else { despacho += "- Não houve ajustes de contribuições na categoria de Contribuinte Individual;\n"; }
+
+        // 5. FACULTATIVO (ITEM 4 NO FORM)
+        if (document.getElementById('item4').checked) {
+            let info = document.getElementById('compFac').value.trim();
+            despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Facultativo (ajustes realizados estritamente para fins de análise do direito ao benefício).\n";
+        } else { despacho += "- Não houve ajustes de contribuições na categoria de Facultativo;\n"; }
+
+        // 6. RURAL (ITEM 6 NO FORM)
+        if (document.getElementById('item6').checked) {
+            let resRural = document.getElementById('resultadoRural').value;
+            let info = document.getElementById('infoRural').value.trim();
+            if (resRural === 'integral') { despacho += "- Análise de Segurado Especial: Todo o período autodeclarado foi reconhecido. " + (info ? "Informações: " + info + "\n" : "\n"); }
+            else if (resRural === 'parcial') { despacho += "- Análise de Segurado Especial: Somente parte do período autodeclarado foi reconhecido. " + (info ? "Informações: " + info + "\n" : "\n"); }
+            else if (resRural === 'negado') {
+                despacho += "- Análise de Segurado Especial: Nenhum período autodeclarado foi reconhecido. Motivo(s) da não homologação:\n";
+                let motivosMarcados = document.querySelectorAll('.chk-motivo:checked');
+                let marcouCNPJ = document.getElementById('chkCNPJRural').checked;
+                if (motivosMarcados.length > 0 || marcouCNPJ) {
+                    motivosMarcados.forEach(cb => { despacho += "  • " + cb.value + ";\n"; });
+                    if (marcouCNPJ) {
+                        let cnpj = document.getElementById('numCNPJRural').value.trim();
+                        despacho += "  • Possui CNPJ ativo" + (cnpj ? " (" + cnpj + ")" : "") + ";\n";
+                    }
+                } else { despacho += "  • (Selecione os motivos no formulário);\n"; }
+            }
+        } else { despacho += "- Não houve análise de Segurado Especial.\n"; }
+
+        // 7. RESSALVA VÍNCULOS NÃO TRATADOS
+        if (document.getElementById('item7').checked) {
+            let houveAcerto1a6 = document.getElementById('item1').checked || document.getElementById('item2').checked || document.getElementById('item3').checked || document.getElementById('item4').checked || document.getElementById('item5').checked || document.getElementById('item6').checked;
+            if (houveAcerto1a6) {
+                despacho += "\n- Há vínculos não tratados. Os acertos foram realizados somente para fins de determinar a concessão do benefício por incapacidade, dada a necessidade de decisão célere. Caso o requerente deseje que sejam ajustados todos os vínculos, deverá solicitar uma revisão administrativa. Informa-se que a revisão poderá ser apresentada em até 10 anos, com efeitos financeiros dos últimos 5 anos, conforme determina a IN 128/2022.\n";
+            } else {
+                despacho += "\n- Ressalva: Não foram realizados ajustes para fins de concessão, contudo, há vínculos não tratados. Dada a necessidade de decisão célere neste benefício por incapacidade, caso o requerente deseje que sejam ajustados todos os vínculos, deverá solicitar uma revisão administrativa. Informa-se que a revisão poderá ser apresentada em até 10 anos, com efeitos financeiros dos últimos 5 anos, conforme determina a IN 128/2022.\n";
+            }
+        }
+
+        document.getElementById('resultado').value = despacho;
+    }
+
+    function limparDados() {
+        const textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach(input => input.value = "");
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => cb.checked = false);
+        document.getElementById('fonteDUT').selectedIndex = 0;
+        document.getElementById('resultadoRural').selectedIndex = 0;
+        ['extra2','extra3','extra4','extra5','extra6', 'divCNPJRural'].forEach(id => { document.getElementById(id).style.display = "none"; });
+        toggleMotivosRural();
+        gerarDespacho();
+    }
+
+    function copiarTexto(btn) {
+        const textarea = document.getElementById("resultado");
+        if (textarea.value.trim() === "") return;
+        textarea.removeAttribute("readonly");
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+        try {
+            document.execCommand("copy");
+            const textoOriginal = btn.innerText;
+            btn.innerText = "Copiado! ✔️";
+            btn.classList.add('copied');
+            setTimeout(() => { btn.innerText = textoOriginal; btn.classList.remove('copied'); }, 2000);
+        } catch (err) {}
+        textarea.setAttribute("readonly", true);
+        window.getSelection().removeAllRanges();
+    }
+</script>
+</body>
+</html>

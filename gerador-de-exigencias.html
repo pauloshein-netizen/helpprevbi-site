@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Exigências / Orientações — HelpPrev BI</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body { padding-bottom: 40px; }
+
+        .container {
+            max-width: 900px;
+            background: var(--paper-card);
+            padding: 28px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--line);
+        }
+
+        .instructions-line { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 20px; }
+        .instructions-line strong { color: var(--ink); }
+
+        .secao-titulo {
+            color: var(--gold);
+            font-size: 0.82rem;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            margin-top: 26px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 6px;
+        }
+        .secao-titulo:first-of-type { margin-top: 4px; }
+
+        .item-group {
+            margin-bottom: 9px; padding: 11px 13px; border-radius: 7px;
+            background-color: var(--paper-card); border: 1px solid var(--line); transition: background 0.15s ease;
+        }
+        .item-group:hover { background-color: var(--paper); }
+        .item-destaque { border-left: 4px solid var(--gold); background-color: var(--gold-soft); }
+        .item-destaque:hover { background-color: var(--gold-soft); filter: brightness(0.97); }
+
+        label { display: flex; align-items: flex-start; cursor: pointer; font-size: 0.92rem; font-weight: 500; color: var(--ink); line-height: 1.5; }
+        input[type="checkbox"] { margin-top: 4px; margin-right: 12px; transform: scale(1.15); cursor: pointer; accent-color: var(--gold); flex-shrink: 0; }
+
+        .subgrupo { display: none; margin-left: 30px; border-left: 4px solid var(--alert); background-color: var(--alert-soft); }
+        .subgrupo label { font-weight: 500; }
+
+        .result-heading { font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); margin: 26px 0 10px; }
+
+        textarea {
+            width: 100%; height: 420px; padding: 16px; border: 1.5px solid var(--line); border-radius: var(--radius);
+            font-size: 0.88rem; line-height: 1.6; resize: vertical; background-color: var(--paper-card);
+            box-sizing: border-box; font-family: var(--font-body); color: var(--ink); box-shadow: var(--shadow-card);
+        }
+        textarea:focus { border-color: var(--focus); }
+
+        .botoes { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        button { padding: 12px 22px; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; font-family: var(--font-body); color: white; flex: 1; transition: 0.15s ease; min-width: 160px; }
+        button:hover { opacity: 0.88; }
+        button:active { transform: scale(0.98); }
+        .btn-copiar { background-color: var(--gold); color: #fff; }
+        .btn-copiar:hover { background-color: var(--focus); }
+        .btn-limpar { background-color: transparent; color: var(--alert); border: 1.5px solid var(--alert); }
+        .btn-limpar:hover { background: var(--alert-soft); opacity: 1; }
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <span class="brand-dot"></span>
+      <div>
+        <div class="brand-mark-sm">HELPPREV</div>
+        <div class="brand-sub">HUB PREV V1</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+        Início
+      </a>
+      <a href="gerador-de-despachos.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        Despachos
+      </a>
+      <a href="gerador-de-exigencias.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 12l2 2 4-4"/></svg>
+        Exigências
+      </a>
+      <a href="gerador-tele-pericia.exe" class="nav-item" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Tele Perícia
+      </a>
+      <a href="cantinho-do-alivio.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        Cantinho do Alívio
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-footer">
+      <div class="status-box"><span class="status-dot"></span> Sistema operacional</div>
+      <div class="sidebar-logo-wrap"><img src="assets/phsh-logo.png" alt="PHSH"></div>
+      <div class="sidebar-credit"><strong>paulo.hein</strong><br>SARD BI GEXSTM</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="Buscar ferramenta...">
+        <span class="kbd">CTRL K</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div>
+            <h1 class="page-title">Gerador de Exigências</h1>
+            <div class="page-badges">
+              <span class="status-pill">Operacional</span>
+              <span class="page-subtitle">Orientações ao segurado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="container">
+        <p class="instructions-line"><strong>Instruções:</strong> selecione os itens desejados para gerar o texto automaticamente.</p>
+
+        <form id="exigenciaForm">
+
+            <div class="secao-titulo">Pacotes Completos: Aposentadoria</div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAposUrbana"> Aposentadoria: Urbana</label></div>
+
+            <div class="item-group subgrupo" id="grupoAposUrbanaOpcoes">
+                <label style="margin-bottom: 8px;"><input type="checkbox" id="chkUrbanaEspecial"> + Averbar Atividade Especial (PPP / Formulários Antigos)</label>
+                <label><input type="checkbox" id="chkUrbanaRural"> + Averbar Atividade Rural (Autodeclaração e Documentos)</label>
+            </div>
+
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAposRural"> Aposentadoria: Rural</label></div>
+
+            <div class="secao-titulo">Pacotes Completos: Salário-Maternidade</div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkMatUrbano"> Salário-Maternidade: Urbano</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkMatRural"> Salário-Maternidade: Rural</label></div>
+
+            <div class="secao-titulo">Pacotes Completos: Pensão por Morte</div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMortePrecedida"> Pensão por Morte: Precedida (Falecido já era aposentado)</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMorteUrbano"> Pensão por Morte: Urbano (Falecido NÃO era aposentado)</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMorteRural"> Pensão por Morte: Rural (Falecido NÃO era aposentado)</label></div>
+
+            <div class="secao-titulo">Pacotes Completos: Auxílio-Reclusão</div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAuxReclusaoUrbano"> Auxílio-Reclusão: Urbano</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAuxReclusaoRural"> Auxílio-Reclusão: Rural</label></div>
+
+            <div class="item-group subgrupo" id="grupoUniaoEstavel">
+                <label><input type="checkbox" id="chkUniaoEstavel"> + Adicionar exigência de União Estável / Dependência (Portaria 991/2022)</label>
+            </div>
+
+            <div class="secao-titulo">Exigências Avulsas</div>
+
+            <div class="item-group"><label><input type="checkbox" id="chkID"> Documentos de Identificação</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkProcuracao"> Procuração e Identificação do Representante</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkProcDigital"> Procuração Digital sem ICP-Brasil (Assinatura Inválida)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkAgentePublico"> Agente Público (CTC / DTC)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkAutodeclaracao"> Autodeclaração (Rural / Pescador / Extrativista)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkCTPS"> CTPS (Carteira de Trabalho)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkDUT"> DUT (Afastamento eSocial / CNIS)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkEC103Emp"> EC 103 - Empregado (Abaixo do Salário-Mínimo / Complementação)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkEC103CI"> EC 103 - Contribuinte Individual (Abaixo do Salário-Mínimo)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkDocRural"> Documentos Comprovação Rural (Lista Completa Art. 116)</label></div>
+        </form>
+
+        <p class="result-heading">Texto gerado</p>
+        <textarea id="resultado" readonly placeholder="Selecione as exigências acima..."></textarea>
+
+        <div class="botoes">
+            <button type="button" class="btn-copiar" onclick="copiarTexto(this)">Copiar Texto</button>
+            <button type="button" class="btn-limpar" onclick="limparFormulario()">Limpar Formulário</button>
+        </div>
+    </div>
+
+      <footer class="site-footer">
+        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> · Setor: SARD BI GEXSTM · Versão 4.0
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll("#exigenciaForm input[type='checkbox']");
+        checkboxes.forEach(cb => cb.addEventListener("change", gerarTexto));
+
+        // Gatilho Pensão/Reclusão -> União Estável
+        document.getElementById('chkPenMortePrecedida').addEventListener("change", toggleUniaoEstavel);
+        document.getElementById('chkPenMorteUrbano').addEventListener("change", toggleUniaoEstavel);
+        document.getElementById('chkPenMorteRural').addEventListener("change", toggleUniaoEstavel);
+        document.getElementById('chkAuxReclusaoUrbano').addEventListener("change", toggleUniaoEstavel);
+        document.getElementById('chkAuxReclusaoRural').addEventListener("change", toggleUniaoEstavel);
+
+        // Gatilho Aposentadoria Urbana -> Especial/Rural
+        document.getElementById('chkAposUrbana').addEventListener("change", toggleAposUrbanaOpcoes);
+
+        document.getElementById("exigenciaForm").addEventListener("submit", function(e){ e.preventDefault(); });
+    });
+
+    // Controles de visibilidade Dinâmica
+    function toggleUniaoEstavel() {
+        const penPrecedida = document.getElementById('chkPenMortePrecedida').checked;
+        const penUrbano = document.getElementById('chkPenMorteUrbano').checked;
+        const penRural = document.getElementById('chkPenMorteRural').checked;
+        const auxUrbano = document.getElementById('chkAuxReclusaoUrbano').checked;
+        const auxRural = document.getElementById('chkAuxReclusaoRural').checked;
+        const grupoUniao = document.getElementById('grupoUniaoEstavel');
+        const chkUniao = document.getElementById('chkUniaoEstavel');
+
+        if (penPrecedida || penUrbano || penRural || auxUrbano || auxRural) {
+            grupoUniao.style.display = "block";
+        } else {
+            grupoUniao.style.display = "none";
+            chkUniao.checked = false;
+        }
+        gerarTexto();
+    }
+
+    function toggleAposUrbanaOpcoes() {
+        const aposUrbana = document.getElementById('chkAposUrbana').checked;
+        const grupoAposOpcoes = document.getElementById('grupoAposUrbanaOpcoes');
+
+        if (aposUrbana) {
+            grupoAposOpcoes.style.display = "block";
+        } else {
+            grupoAposOpcoes.style.display = "none";
+            document.getElementById('chkUrbanaEspecial').checked = false;
+            document.getElementById('chkUrbanaRural').checked = false;
+        }
+        gerarTexto();
+    }
+
+    /* === PACOTES COMPLETOS: APOSENTADORIA === */
+    const txtAposUrbana = `Para a análise do benefício de Aposentadoria (Urbana), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de Identificação oficial com foto;
+- Certidão de Nascimento ou Casamento (se possível, apresentar via atualizada);
+- Comprovante de residência;
+- Todas as Carteiras de Trabalho (CTPS) do requerente (via física e não digital), digitalizando as páginas de identificação, contratos, alterações salariais e anotações gerais.\n\n`;
+
+    const txtUrbanaEspecial = `- COMPROVAÇÃO DE ATIVIDADE ESPECIAL:
+Apresentar Perfil Profissiográfico Previdenciário (PPP) atualizado, emitido e assinado pela empresa, ou formulários antigos correspondentes (DIRBEN-8030, DSS-8030, SB-40, etc.), abrangendo os períodos trabalhados com exposição a agentes nocivos que se pretende averbar.\n\n`;
+
+    const txtUrbanaRural = `- COMPROVAÇÃO DE ATIVIDADE RURAL (Averbação de Período):
+- Formulário de "Autodeclaração de Segurado Especial" devidamente preenchido e assinado. ATENÇÃO: Preencha APENAS O MODELO que corresponde ao seu trabalho:
+    [ ] Trabalhador Rural / Agricultor (Anexo VIII); OU
+    [ ] Pescador Artesanal (Anexo IX); OU
+    [ ] Seringueiro e Extrativista Vegetal (Anexo X).
+- Documentos para comprovar a atividade rural do período que deseja averbar (ver lista completa no final deste documento).\n\n`;
+
+    const txtAposRural = `Para a análise do benefício de Aposentadoria (Rural / Idade Rural), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de Identificação oficial com foto;
+- Certidão de Nascimento ou Casamento (se possível, apresentar via atualizada);
+- Comprovante de residência;
+- Todas as Carteiras de Trabalho (CTPS) do requerente (via física e não digital), digitalizando as páginas de identificação, contratos e anotações gerais;
+- Formulário de "Autodeclaração de Segurado Especial" devidamente preenchido e assinado. ATENÇÃO: Preencha APENAS O MODELO que corresponde ao seu trabalho:
+    [ ] Trabalhador Rural / Agricultor (Anexo VIII); OU
+    [ ] Pescador Artesanal (Anexo IX); OU
+    [ ] Seringueiro e Extrativista Vegetal (Anexo X).
+- Documentos para comprovar a atividade rural, conforme Art. 116 da IN 128/2022 (ver lista completa no final deste documento).\n\n`;
+
+    /* === PACOTES COMPLETOS: SALÁRIO-MATERNIDADE === */
+    const txtMatUrbano = `Para a análise do benefício de Salário-Maternidade (Urbano), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de Identificação oficial com foto;
+- Comprovante de residência;
+- Certidão de Nascimento da criança OU Atestado Médico original (caso o afastamento seja anterior ao parto);
+- Todas as Carteiras de Trabalho (CTPS) da segurada. Digitalizar todas as páginas que contenham anotações (identificação, contratos, alterações salariais e anotações gerais).\n\n`;
+
+    const txtMatRural = `Para a análise do benefício de Salário-Maternidade (Rural / Segurada Especial), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de Identificação oficial com foto;
+- Comprovante de residência;
+- Certidão de Nascimento da criança OU Atestado Médico original (caso o afastamento seja anterior ao parto);
+- Formulário de "Autodeclaração de Segurado Especial" devidamente preenchido e assinado. ATENÇÃO: Preencha APENAS O MODELO que corresponde ao seu trabalho:
+    [ ] Trabalhador Rural / Agricultor (Anexo VIII); OU
+    [ ] Pescador Artesanal (Anexo IX); OU
+    [ ] Seringueiro e Extrativista Vegetal (Anexo X).
+- Documentos para comprovar a atividade rural no período de carência (10 meses anteriores ao parto), conforme previsto no Art. 116 da IN 128/2022 (ver lista completa no final deste documento).\n\n`;
+
+    /* === PACOTES COMPLETOS: PENSÃO POR MORTE === */
+    const txtPenMortePrecedida = `Para a análise do benefício de Pensão por Morte (instituidor já recebia benefício/aposentadoria), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de identificação oficial com foto do(s) requerente(s) e do falecido;
+- Certidão de Óbito;
+- Certidão de Nascimento ou Casamento do(s) requerente(s) e do falecido (se possível, apresentar via atualizada);\n\n`;
+
+    const txtPenMorteUrbano = `Para a análise do benefício de Pensão por Morte (Urbana - instituidor não recebia aposentadoria), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de identificação oficial com foto do(s) requerente(s) e do falecido;
+- Certidão de Óbito;
+- Certidão de Nascimento ou Casamento do(s) requerente(s) e do falecido (se possível, apresentar via atualizada);
+- Todas as Carteiras de Trabalho (CTPS) do falecido (via física e não digital), digitalizando as páginas de identificação, contratos, alterações salariais e anotações gerais para comprovação do vínculo e qualidade de segurado;\n\n`;
+
+    const txtPenMorteRural = `Para a análise do benefício de Pensão por Morte (Rural - instituidor não recebia aposentadoria), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de identificação oficial com foto do(s) requerente(s) e do falecido;
+- Certidão de Óbito;
+- Certidão de Nascimento ou Casamento do(s) requerente(s) e do falecido (se possível, apresentar via atualizada);
+- Formulário de "Autodeclaração de Segurado Especial" em nome do falecido, devidamente preenchido e assinado. ATENÇÃO: Escolha APENAS O MODELO que corresponde ao trabalho do falecido:
+    [ ] Trabalhador Rural / Agricultor (Anexo VIII); OU
+    [ ] Pescador Artesanal (Anexo IX); OU
+    [ ] Seringueiro e Extrativista Vegetal (Anexo X).
+- Documentos para comprovar a atividade rural do falecido, conforme Art. 116 da IN 128/2022 (ver lista completa no final deste documento);\n\n`;
+
+    /* === PACOTES COMPLETOS: AUXÍLIO-RECLUSÃO === */
+    const txtAuxReclusaoUrbano = `Para a análise do benefício de Auxílio-Reclusão (Urbano), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de identificação oficial com foto do(s) requerente(s) e do segurado recluso;
+- Certidão Judicial/Prisional original de efetivo recolhimento à prisão;
+- Certidão de Nascimento ou Casamento do(s) requerente(s) e do segurado (se possível, apresentar via atualizada);
+- Todas as Carteiras de Trabalho (CTPS) do segurado recluso (via física e não digital), digitalizando as páginas de identificação, contratos, alterações salariais e anotações gerais para comprovação do vínculo e qualidade de segurado;\n\n`;
+
+    const txtAuxReclusaoRural = `Para a análise do benefício de Auxílio-Reclusão (Rural), solicitamos a apresentação dos seguintes documentos:
+
+- Documento de identificação oficial com foto do(s) requerente(s) e do segurado recluso;
+- Certidão Judicial/Prisional original de efetivo recolhimento à prisão;
+- Certidão de Nascimento ou Casamento do(s) requerente(s) e do segurado (se possível, apresentar via atualizada);
+- Formulário de "Autodeclaração de Segurado Especial" em nome do segurado recluso, devidamente preenchido e assinado. ATENÇÃO: Escolha APENAS O MODELO que corresponde ao trabalho do segurado:
+    [ ] Trabalhador Rural / Agricultor (Anexo VIII); OU
+    [ ] Pescador Artesanal (Anexo IX); OU
+    [ ] Seringueiro e Extrativista Vegetal (Anexo X).
+- Documentos para comprovar a atividade rural do segurado, conforme Art. 116 da IN 128/2022 (ver lista completa no final deste documento);\n\n`;
+
+    /* === TEXTO DINÂMICO DA UNIÃO ESTÁVEL === */
+    const txtUniaoEstavel = `- COMPROVAÇÃO DE UNIÃO ESTÁVEL OU DEPENDÊNCIA ECONÔMICA:
+Como o(a) requerente pleiteia o benefício na qualidade de companheiro(a) ou dependente (pais/irmãos), é necessário apresentar, no mínimo, 2 (dois) documentos que comprovem o vínculo ou a dependência econômica em relação ao instituidor.
+
+Conforme a Portaria DIRBEN/INSS nº 991/2022 (Art. 8º), são aceitos documentos como:
+I - Certidão de nascimento de filho havido em comum;
+II - Certidão de casamento religioso;
+III - Declaração do Imposto de Renda do segurado, em que conste o interessado como seu dependente;
+IV - Disposições testamentárias ou Declaração especial feita perante tabelião;
+V - Prova de mesmo domicílio (ex: contas de água/luz/telefone no mesmo endereço);
+VI - Prova de encargos domésticos evidentes e existência de sociedade ou comunhão nos atos da vida civil;
+VII - Procuração ou fiança reciprocamente outorgada ou Conta bancária conjunta;
+VIII - Registro em associação, ficha médica ou apólice de seguro onde conste como dependente/beneficiário;
+IX - Anotação constante de ficha ou livro de registro de empregados;
+X - Escritura de compra e venda de imóvel pelo segurado em nome de dependente;
+XI - Quaisquer outros documentos que possam levar à convicção do fato a comprovar.
+
+▶ ATENÇÃO AOS PRAZOS DOS DOCUMENTOS (REGRA DOS 24 MESES):
+Para que o benefício seja concedido por período superior a 4 (quatro) meses, DEVERÁ APRESENTAR AO MENOS UMA PROVA DE CONVIVÊNCIA/DEPENDÊNCIA EMITIDA NOS ÚLTIMOS 24 MESES ANTERIORES AO ÓBITO OU RECOLHIMENTO À PRISÃO, BEM COMO OUTRA PROVA EMITIDA EM PERÍODO ANTERIOR A ESSES 24 MESES.\n\n`;
+
+    /* === TEXTOS DAS EXIGÊNCIAS AVULSAS === */
+    const txtID = `- Documento de Identificação, Certidão de Nascimento ou Casamento, Comprovante de residência.\n\n`;
+
+    const txtProcuracao = `Com fundamento na PORTARIA DIRBEN/INSS Nº 993, DE 28 DE MARÇO DE 2022, especialmente no artigo 43, solicitamos o cumprimento das seguintes exigências para o regular prosseguimento do processo administrativo:
+
+- Apresentação do número de inscrição na OAB do advogado constituído;
+- Documento de identificação oficial com foto do interessado;
+- Procuração outorgada ao advogado, contendo poderes específicos para representação administrativa perante o INSS.\n\n`;
+
+    const txtProcDigital = `Considerando que foi apresentada procuração com assinatura digital neste processo, é importante esclarecer que esse tipo de documento deve cumprir os requisitos legais para ter validade jurídica no Brasil.
+
+De acordo com a Medida Provisória nº 2.200-2/2001, somente possuem fé pública e autenticidade os documentos digitais assinados com certificado digital emitido no âmbito da Infraestrutura de Chaves Públicas Brasileira (ICP-Brasil).
+
+Assim, não são válidas, para este processo, procurações assinadas apenas por meio de plataformas intermediadoras, como Zapsign, Clicksign, D4Sign, DocuSign, entre outras, quando a assinatura não utiliza certificado digital próprio do outorgante vinculado à ICP-Brasil. Isso ocorre porque essas plataformas não integram a cadeia de confiança da ICP-Brasil, não atendendo aos requisitos legais exigidos.
+
+Dessa forma, as partes deverão apresentar procuração assinada digitalmente com certificado próprio, emitido por autoridade certificadora credenciada à ICP-Brasil, garantindo a autenticidade, integridade e validade jurídica do documento.
+
+▶ ORIENTAÇÃO: O portal gov.br oferece um serviço GRATUITO de assinatura digital com plena validade legal. Para utilizá-lo, o outorgante (cidadão) precisa ter uma conta gov.br de nível Prata ou Ouro e acessar o site oficial: https://assinatura.gov.br.
+
+▶ ALTERNATIVA FÍSICA (MAIS PRÁTICA):
+Caso não possuam certificado digital válido ou não utilizem o portal gov.br, deverá ser apresentada a PROCURAÇÃO EM FORMATO FÍSICO, devidamente assinada de próprio punho.\n\n`;
+
+    const txtAgentePublico = `- COMPROVAÇÃO DE ATIVIDADE DE AGENTE PÚBLICO:
+Para comprovar o período trabalhado em órgão público, é necessário apresentar o documento oficial emitido pelo ente empregador. Apresente:
+    • Certidão de Tempo de Contribuição (CTC), caso o vínculo tenha sido em Regime Próprio (RPPS); OU
+    • Declaração de Tempo de Contribuição (DTC) ao RGPS, caso o vínculo tenha sido no Regime Geral, obrigatoriamente acompanhada da respectiva "Relação das Bases de Cálculo de Contribuição" (Relação de Remunerações).\n\n`;
+
+    const txtCTPS = `- Todas as CARTEIRAS DE TRABALHO (via física e não digital) do interessado. Digitalizar todas as páginas que contenham anotações (identificação, contratos, anotações de contribuição sindical, alterações salariais, férias, FGTS e anotações gerais), obedecendo à sequência das páginas.\n\n`;
+
+    const txtDUT = `Verificamos que não há no Cadastro Nacional de Informações Sociais (CNIS) do(a) empregado(a) qualquer registro de afastamento por motivo de doença.
+Por isso, pedimos que o(a) empregador informe o afastamento corretamente no eSocial, utilizando o evento S-2230, no campo específico para afastamento por doença. Essa informação é necessária para que o período conste no CNIS e possa ser analisado pelo INSS no processo do benefício por incapacidade.
+
+Caso a informação continue sem aparecer no CNIS mesmo após o envio pelo eSocial, será necessário apresentar ao INSS:
+    • O número do recibo eletrônico gerado pelo eSocial;
+    • Uma declaração assinada pelo responsável pelas informações, com nome e identificação completa.\n\n`;
+
+    const txtEC103Emp = `- COMPLEMENTAÇÃO DE CONTRIBUIÇÕES ABAIXO DO MÍNIMO (EC 103/2019):
+Verificamos que há contribuições feitas a partir de novembro de 2019 com valor menor que o salário-mínimo da época.
+De acordo com a Emenda Constitucional nº 103/2019, esses períodos só poderão ser contados para aposentadoria e outros benefícios se forem completados, ou seja, se você pagar a diferença que falta ou usar valores a mais pagos em outras contribuições.
+
+Para fazer essa regularização, siga este passo a passo:
+1. Acesse o site ou aplicativo Meu INSS e clique em "Novo Pedido";
+2. Na busca (ícone de lupa), digite: "Ajustes para Alcance do Salário Mínimo – Emenda Constitucional 103/2019";
+3. Escolha o ano das contribuições que quer ajustar (serão mostradas apenas as que são depois de 2019 e que estão abaixo do valor do salário-mínimo) e clique em "Avançar";
+4. O sistema vai mostrar as opções de ajuste: juntar contribuições, usar valor que sobrou de outra contribuição ou completar o valor pagando a diferença. Clique em "Detalhar" para ver cada opção e escolha a que quiser, clicando em "Aceitar";
+5. Se escolher a complementação, selecione os meses que quer pagar a diferença, clique em "Aceitar", escolha a agência para atendimento, clique em "Avançar", marque a opção "Declaro que li e concordo com as informações acima", clique de novo em "Avançar" e selecione o(s) boleto(s) (DARF) gerado(s). O sistema vai mostrar o documento para pagamento, com a data de vencimento;
+6. Depois de pagar, envie o comprovante de pagamento no próprio sistema.
+
+▶ ATENÇÃO: Só depois que for feita essa regularização, os períodos com contribuição abaixo do salário-mínimo poderão ser considerados para fins de tempo de contribuição e carência nos benefícios.\n\n`;
+
+    const txtEC103CI = `Identificamos contribuições abaixo do salário-mínimo efetuadas a partir de 11/2019.
+COMO REGULARIZAR: Acesse o portal Meu INSS, faça login com sua conta gov.br, selecione "Cálculo de GPS Diferença de Valor Devido – Contribuição Inferior ao Salário Mínimo", escolha o ano, gere a Guia de Pagamento e efetue o pagamento.\n\n`;
+
+    const txtAutodeclaracao = `- Formulário de "Autodeclaração de Segurado Especial" devidamente preenchido e assinado. ATENÇÃO: Preencha APENAS O MODELO que corresponde ao seu trabalho:
+    [ ] Trabalhador Rural / Agricultor (Anexo VIII); OU
+    [ ] Pescador Artesanal (Anexo IX); OU
+    [ ] Seringueiro e Extrativista Vegetal (Anexo X).\n\n`;
+
+    /* SUPER LISTA RURAL - INTELIGENTE E FORMATADA */
+    const txtDocRuralCompleto = `---------------------------------------------------------
+▶ LISTA COMPLETA DE DOCUMENTOS RURAIS ACEITOS (Art. 116 da IN 128/2022):
+
+Para comprovar a atividade rural, o INSS aceita os documentos listados abaixo.
+ATENÇÃO: Você NÃO precisa ter todos eles! Apresente apenas os que você possuir referentes à época que deseja comprovar (reunir documentos mais antigos e mais recentes):
+
+I - Contrato de arrendamento, parceria, meação ou comodato rural (válido a partir do registro ou reconhecimento de firma em cartório);
+II - Declaração de Aptidão ao PRONAF (DAP) ou documento que a substitua (CAF);
+III - Bloco de notas do produtor rural;
+IV - Notas fiscais de entrada de mercadorias emitidas pela empresa compradora da produção, com o nome do segurado como vendedor;
+V - Documentos fiscais relativos à entrega de produção rural a cooperativas ou entrepostos, com indicação do segurado como vendedor;
+VI - Comprovantes de recolhimento de contribuição à Previdência Social da comercialização da produção;
+VII - Cópia da declaração de imposto de renda, com indicação de renda de produção rural;
+VIII - Licença de ocupação ou permissão outorgada pelo INCRA;
+IX - Comprovante de pagamento do ITR, DIAC ou DIAT;
+X - Certidão fornecida pela FUNAI (para indígenas);
+XI - Certidão de casamento civil ou religioso ou certidão de união estável;
+XII - Certidão de nascimento ou de batismo dos filhos;
+XIII - Certidão de tutela ou de curatela;
+XIV - Procuração;
+XV - Título de eleitor, ficha de cadastro eleitoral ou certidão eleitoral;
+XVI - Certificado de alistamento ou de quitação com o serviço militar;
+XVII - Comprovante de matrícula, ficha escolar, ata ou boletim do trabalhador ou dos filhos;
+XVIII - Ficha de associado em cooperativa;
+XIX - Comprovante de participação em programas governamentais para a área rural;
+XX - Comprovante de assistência técnica e extensão rural (Emater, etc.);
+XXI - Escritura pública de imóvel;
+XXII - Recibo de pagamento de contribuição federativa ou confederativa;
+XXIII - Registro em processos (inclusive inquéritos) como testemunha, autor ou réu;
+XXIV - Ficha ou registro em hospitais, postos de saúde ou agentes comunitários de saúde;
+XXV - Carteira de vacinação e cartão da gestante;
+XXVI - Título de propriedade de imóvel rural;
+XXVII - Recibo de compra de implementos ou de insumos agrícolas;
+XXVIII - Comprovante de empréstimo bancário para fins de atividade rural;
+XXIX - Ficha de inscrição em sindicato de trabalhadores rurais, colônia ou associação de pescadores;
+XXX - Contribuição social ao sindicato de trabalhadores rurais ou colônia de pescadores;
+XXXI - Publicação na imprensa ou em informativos de circulação pública;
+XXXII - Registro em livros de entidades religiosas (batismo, crisma, casamento, etc.);
+XXXIII - Registro em associações de produtores rurais, comunitárias, recreativas ou desportivas;
+XXXIV - Título de aforamento;
+XXXV - Ficha de atendimento médico ou odontológico;
+XXXVI - Declaração fornecida pelo INCRA para remanescentes de comunidades quilombolas.\n\n`;
+
+    function gerarTexto() {
+        let textoFinal = "";
+        let mostrarListaRuralCompleta = false;
+
+        /* -- Verifica Pacotes de Aposentadoria -- */
+        if (document.getElementById('chkAposUrbana').checked) {
+            textoFinal += txtAposUrbana;
+            if (document.getElementById('chkUrbanaEspecial').checked) textoFinal += txtUrbanaEspecial;
+            if (document.getElementById('chkUrbanaRural').checked) {
+                textoFinal += txtUrbanaRural;
+                mostrarListaRuralCompleta = true;
+            }
+        }
+        if (document.getElementById('chkAposRural').checked) {
+            textoFinal += txtAposRural;
+            mostrarListaRuralCompleta = true;
+        }
+
+        /* -- Verifica Pacotes de Maternidade -- */
+        if (document.getElementById('chkMatUrbano').checked) textoFinal += txtMatUrbano;
+        if (document.getElementById('chkMatRural').checked) {
+            textoFinal += txtMatRural;
+            mostrarListaRuralCompleta = true;
+        }
+
+        /* -- Verifica Pacotes de Pensão -- */
+        if (document.getElementById('chkPenMortePrecedida').checked) textoFinal += txtPenMortePrecedida;
+        if (document.getElementById('chkPenMorteUrbano').checked) textoFinal += txtPenMorteUrbano;
+        if (document.getElementById('chkPenMorteRural').checked) {
+            textoFinal += txtPenMorteRural;
+            mostrarListaRuralCompleta = true;
+        }
+
+        /* -- Verifica Pacotes de Auxílio-Reclusão -- */
+        if (document.getElementById('chkAuxReclusaoUrbano').checked) textoFinal += txtAuxReclusaoUrbano;
+        if (document.getElementById('chkAuxReclusaoRural').checked) {
+            textoFinal += txtAuxReclusaoRural;
+            mostrarListaRuralCompleta = true;
+        }
+
+        /* -- Verifica União Estável Dinâmica -- */
+        if (document.getElementById('chkUniaoEstavel').checked) textoFinal += txtUniaoEstavel;
+
+        /* -- Verifica Exigências Avulsas -- */
+        if (document.getElementById('chkID').checked) textoFinal += txtID;
+        if (document.getElementById('chkProcuracao').checked) textoFinal += txtProcuracao;
+        if (document.getElementById('chkProcDigital').checked) textoFinal += txtProcDigital;
+        if (document.getElementById('chkAgentePublico').checked) textoFinal += txtAgentePublico;
+        if (document.getElementById('chkAutodeclaracao').checked) textoFinal += txtAutodeclaracao;
+        if (document.getElementById('chkCTPS').checked) textoFinal += txtCTPS;
+        if (document.getElementById('chkDUT').checked) textoFinal += txtDUT;
+        if (document.getElementById('chkEC103Emp').checked) textoFinal += txtEC103Emp;
+        if (document.getElementById('chkEC103CI').checked) textoFinal += txtEC103CI;
+
+        // Gatilho avulso para a Lista Rural
+        if (document.getElementById('chkDocRural').checked) {
+            mostrarListaRuralCompleta = true;
+        }
+
+        /* -- INSERE A LISTA RURAL NO FINAL (SE NECESSÁRIO) -- */
+        if (mostrarListaRuralCompleta) {
+            textoFinal += txtDocRuralCompleto;
+        }
+
+        document.getElementById('resultado').value = textoFinal;
+    }
+
+    function limparFormulario() {
+        const checkboxes = document.querySelectorAll("#exigenciaForm input[type='checkbox']");
+        checkboxes.forEach(cb => cb.checked = false);
+        document.getElementById("resultado").value = "";
+
+        // Esconde os submenus ao limpar
+        document.getElementById('grupoUniaoEstavel').style.display = "none";
+        document.getElementById('grupoAposUrbanaOpcoes').style.display = "none";
+    }
+
+    function copiarTexto(btn) {
+        const textarea = document.getElementById("resultado");
+        if (textarea.value.trim() === "") return;
+
+        textarea.removeAttribute("readonly");
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+
+        try {
+            document.execCommand("copy");
+            const textoOriginal = btn.innerText;
+            btn.innerText = "Copiado! ✔️";
+
+            setTimeout(() => {
+                btn.innerText = textoOriginal;
+            }, 2000);
+        } catch (err) {}
+
+        textarea.setAttribute("readonly", true);
+        window.getSelection().removeAllRanges();
+    }
+</script>
+</body>
+</html>
