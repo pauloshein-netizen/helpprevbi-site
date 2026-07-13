@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://helpprevbi.com.br/sitemap.xml
