@@ -164,12 +164,16 @@
             <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMorteUrbano"> Pensão por Morte: Urbano (Falecido NÃO era aposentado)</label></div>
             <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMorteRural"> Pensão por Morte: Rural (Falecido NÃO era aposentado)</label></div>
 
+            <div class="item-group subgrupo" id="grupoUniaoEstavelPensao">
+                <label><input type="checkbox" id="chkUniaoEstavelPensao"> + Adicionar exigência de União Estável / Dependência (Portaria 991/2022)</label>
+            </div>
+
             <div class="secao-titulo">Pacotes Completos: Auxílio-Reclusão</div>
             <div class="item-group item-destaque"><label><input type="checkbox" id="chkAuxReclusaoUrbano"> Auxílio-Reclusão: Urbano</label></div>
             <div class="item-group item-destaque"><label><input type="checkbox" id="chkAuxReclusaoRural"> Auxílio-Reclusão: Rural</label></div>
 
-            <div class="item-group subgrupo" id="grupoUniaoEstavel">
-                <label><input type="checkbox" id="chkUniaoEstavel"> + Adicionar exigência de União Estável / Dependência (Portaria 991/2022)</label>
+            <div class="item-group subgrupo" id="grupoUniaoEstavelAuxilio">
+                <label><input type="checkbox" id="chkUniaoEstavelAuxilio"> + Adicionar exigência de União Estável / Dependência (Portaria 991/2022)</label>
             </div>
 
             <div class="secao-titulo">Exigências Avulsas</div>
@@ -208,12 +212,14 @@
         const checkboxes = document.querySelectorAll("#exigenciaForm input[type='checkbox']");
         checkboxes.forEach(cb => cb.addEventListener("change", gerarTexto));
 
-        // Gatilho Pensão/Reclusão -> União Estável
-        document.getElementById('chkPenMortePrecedida').addEventListener("change", toggleUniaoEstavel);
-        document.getElementById('chkPenMorteUrbano').addEventListener("change", toggleUniaoEstavel);
-        document.getElementById('chkPenMorteRural').addEventListener("change", toggleUniaoEstavel);
-        document.getElementById('chkAuxReclusaoUrbano').addEventListener("change", toggleUniaoEstavel);
-        document.getElementById('chkAuxReclusaoRural').addEventListener("change", toggleUniaoEstavel);
+        // Gatilho Pensão -> União Estável (Pensão)
+        document.getElementById('chkPenMortePrecedida').addEventListener("change", toggleUniaoEstavelPensao);
+        document.getElementById('chkPenMorteUrbano').addEventListener("change", toggleUniaoEstavelPensao);
+        document.getElementById('chkPenMorteRural').addEventListener("change", toggleUniaoEstavelPensao);
+
+        // Gatilho Auxílio-Reclusão -> União Estável (Auxílio)
+        document.getElementById('chkAuxReclusaoUrbano').addEventListener("change", toggleUniaoEstavelAuxilio);
+        document.getElementById('chkAuxReclusaoRural').addEventListener("change", toggleUniaoEstavelAuxilio);
 
         // Gatilho Aposentadoria Urbana -> Especial/Rural
         document.getElementById('chkAposUrbana').addEventListener("change", toggleAposUrbanaOpcoes);
@@ -222,16 +228,29 @@
     });
 
     // Controles de visibilidade Dinâmica
-    function toggleUniaoEstavel() {
+    function toggleUniaoEstavelPensao() {
         const penPrecedida = document.getElementById('chkPenMortePrecedida').checked;
         const penUrbano = document.getElementById('chkPenMorteUrbano').checked;
         const penRural = document.getElementById('chkPenMorteRural').checked;
+        const grupoUniao = document.getElementById('grupoUniaoEstavelPensao');
+        const chkUniao = document.getElementById('chkUniaoEstavelPensao');
+
+        if (penPrecedida || penUrbano || penRural) {
+            grupoUniao.style.display = "block";
+        } else {
+            grupoUniao.style.display = "none";
+            chkUniao.checked = false;
+        }
+        gerarTexto();
+    }
+
+    function toggleUniaoEstavelAuxilio() {
         const auxUrbano = document.getElementById('chkAuxReclusaoUrbano').checked;
         const auxRural = document.getElementById('chkAuxReclusaoRural').checked;
-        const grupoUniao = document.getElementById('grupoUniaoEstavel');
-        const chkUniao = document.getElementById('chkUniaoEstavel');
+        const grupoUniao = document.getElementById('grupoUniaoEstavelAuxilio');
+        const chkUniao = document.getElementById('chkUniaoEstavelAuxilio');
 
-        if (penPrecedida || penUrbano || penRural || auxUrbano || auxRural) {
+        if (auxUrbano || auxRural) {
             grupoUniao.style.display = "block";
         } else {
             grupoUniao.style.display = "none";
@@ -510,7 +529,7 @@ XXXVI - Declaração fornecida pelo INCRA para remanescentes de comunidades quil
         }
 
         /* -- Verifica União Estável Dinâmica -- */
-        if (document.getElementById('chkUniaoEstavel').checked) textoFinal += txtUniaoEstavel;
+        if (document.getElementById('chkUniaoEstavelPensao').checked || document.getElementById('chkUniaoEstavelAuxilio').checked) textoFinal += txtUniaoEstavel;
 
         /* -- Verifica Exigências Avulsas -- */
         if (document.getElementById('chkID').checked) textoFinal += txtID;
@@ -542,7 +561,8 @@ XXXVI - Declaração fornecida pelo INCRA para remanescentes de comunidades quil
         document.getElementById("resultado").value = "";
 
         // Esconde os submenus ao limpar
-        document.getElementById('grupoUniaoEstavel').style.display = "none";
+        document.getElementById('grupoUniaoEstavelPensao').style.display = "none";
+        document.getElementById('grupoUniaoEstavelAuxilio').style.display = "none";
         document.getElementById('grupoAposUrbanaOpcoes').style.display = "none";
     }
 
