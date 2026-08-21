@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Paulo Henrique Salatti Hein / SARD BI GEXSTM">
+<title>Despacho LIBDUP — HelpPrev</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+  body { padding-bottom: 40px; }
+
+  .container { max-width: 820px; background: var(--paper-card); padding: 28px; border-radius: var(--radius); box-shadow: var(--shadow-card); border: 1px solid var(--line); }
+
+  .intro-line { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 24px; }
+  .intro-line strong { color: var(--ink); }
+
+  /* ---------- Barra de progresso ---------- */
+  .wizard-progress { display: flex; align-items: center; margin-bottom: 30px; }
+  .wp-step {
+    display: flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 50%;
+    border: 1.5px solid var(--line); background: var(--paper);
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-faint);
+    flex-shrink: 0; transition: all 0.2s ease;
+  }
+  .wp-line { flex: 1; height: 1.5px; background: var(--line); margin: 0 2px; transition: background 0.2s ease; }
+  .wp-step.done { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .wp-step.current { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
+  .wp-line.done { background: var(--gold); }
+
+  .step-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .step-title { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; margin: 0 0 20px; }
+
+  .field-block { margin-bottom: 18px; }
+  .field-block label.f-label { display: block; font-size: 0.78rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 6px; }
+  .field-block input[type="text"], .field-block input[type="date"], .field-block select, .field-block textarea {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px;
+    background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 0.92rem;
+  }
+  .field-block input:focus, .field-block select:focus, .field-block textarea:focus { border-color: var(--focus); }
+  .field-block textarea { min-height: 90px; resize: vertical; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+
+  /* ---------- Opções de rádio (tipo de duplicidade) ---------- */
+  .radio-card {
+    display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px;
+    border: 1.5px solid var(--line); border-radius: 10px; margin-bottom: 10px;
+    cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .radio-card:hover { border-color: var(--gold); }
+  .radio-card input { margin-top: 3px; accent-color: var(--gold); flex-shrink: 0; }
+  .radio-card .rc-text strong { display: block; font-size: 0.92rem; color: var(--ink); }
+  .radio-card .rc-text span { font-size: 0.8rem; color: var(--ink-soft); }
+  .radio-card.checked { border-color: var(--gold); background: var(--gold-soft); }
+
+  /* ---------- Checkbox simples ---------- */
+  .chk-line { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; font-size: 0.9rem; }
+  .chk-line input { margin-top: 3px; accent-color: var(--gold); flex-shrink: 0; }
+
+  /* ---------- Alertas contextuais ---------- */
+  .alert-box { border-radius: 9px; padding: 13px 16px; font-size: 0.85rem; line-height: 1.55; margin: 14px 0; }
+  .alert-info { background: var(--gold-soft); border-left: 3px solid var(--gold); color: var(--ink); }
+  .alert-warn { background: var(--alert-soft); border-left: 3px solid var(--alert); color: var(--ink); }
+  .alert-box strong { color: var(--ink); }
+  .alert-box .fonte { display: block; margin-top: 6px; font-size: 0.72rem; color: var(--ink-faint); font-family: var(--font-mono); }
+
+  .subsecao-titulo { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-soft); margin: 22px 0 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+
+  /* ---------- Conferência ---------- */
+  .conf-item { display: flex; justify-content: space-between; gap: 16px; padding: 9px 0; border-bottom: 1px dashed var(--line); font-size: 0.87rem; }
+  .conf-item .k { color: var(--ink-soft); flex-shrink: 0; }
+  .conf-item .v { color: var(--ink); text-align: right; }
+
+  /* ---------- Navegação do wizard ---------- */
+  .wizard-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 26px; }
+  .btn { font-family: var(--font-body); font-weight: 600; font-size: 0.88rem; padding: 11px 22px; border-radius: 8px; border: none; cursor: pointer; transition: 0.15s ease; }
+  .btn-voltar { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--line); }
+  .btn-voltar:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .btn-proximo, .btn-gerar { background: var(--gold); color: #fff; }
+  .btn-proximo:hover, .btn-gerar:hover { background: var(--focus); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .wizard-step { display: none; }
+  .wizard-step.active { display: block; animation: fadeUp 0.35s ease both; }
+
+  #resultado-libdup { width: 100%; min-height: 340px; padding: 16px; border: 1.5px solid var(--line); border-radius: var(--radius); background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 0.9rem; line-height: 1.6; resize: vertical; }
+
+  .result-actions { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  .result-actions .btn { flex: 1; min-width: 150px; }
+  .btn-copiar-libdup { background: var(--gold); color: #fff; }
+  .btn-copiar-libdup:hover { background: var(--focus); }
+  .btn-novo { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--line); }
+  .btn-novo:hover { border-color: var(--ink-soft); color: var(--ink); }
+</style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="index.html">
+      <span class="brand-dot"></span>
+      <div>
+        <div class="brand-mark-sm">HELPPREV</div>
+        <div class="brand-sub">HUB PREV V1</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <a href="index.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+        Início
+      </a>
+      <a href="gerador-de-despachos.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        Despachos
+      </a>
+      <a href="gerador-libdup.html" class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+        Despacho LIBDUP
+      </a>
+      <a href="gerador-de-exigencias.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 12l2 2 4-4"/></svg>
+        Exigências
+      </a>
+      <a href="https://github.com/pauloshein-netizen/helpprevbi-site/releases/download/v1.0/gerador-tele-pericia.exe" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Tele Perícia
+      </a>
+      <a href="cantinho-do-alivio.html" class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        Cantinho do Alívio
+      </a>
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-footer">
+      <div class="status-box"><span class="status-dot"></span> Sistema operacional</div>
+      <div class="sidebar-logo-wrap"><img src="assets/phsh-logo.png" alt="PHSH"></div>
+      <div class="sidebar-credit"><strong>paulo.hein</strong><br>SARD BI GEXSTM</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="Buscar ferramenta...">
+        <span class="kbd">CTRL K</span>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
+          <div>
+            <h1 class="page-title">Despacho LIBDUP</h1>
+            <div class="page-badges">
+              <span class="status-pill">Operacional</span>
+              <span class="page-subtitle">Solicitação de liberação de duplicidade</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <p class="intro-line">
+          <strong>Importante:</strong> esta ferramenta não executa a LIBDUP nem simula que a duplicidade foi liberada.
+          Ela auxilia na análise, organização das informações e geração de um despacho fundamentado para
+          encaminhamento da subtarefa ao setor competente, que fará a análise e, se cabível, a liberação.
+        </p>
+
+        <div class="wizard-progress" id="wizard-progress"></div>
+
+        <!-- ETAPA 1 — IDENTIFICAÇÃO -->
+        <section class="wizard-step" data-step="1">
+          <p class="step-label">Etapa 1 de 6</p>
+          <h2 class="step-title">Identificação</h2>
+
+          <div class="field-row">
+            <div class="field-block">
+              <label class="f-label">Nome do requerente/segurado</label>
+              <input type="text" id="f-nome">
+            </div>
+            <div class="field-block">
+              <label class="f-label">CPF</label>
+              <input type="text" id="f-cpf" placeholder="000.000.000-00">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-block">
+              <label class="f-label">NB do benefício objeto da concessão</label>
+              <input type="text" id="f-nb-principal">
+            </div>
+            <div class="field-block">
+              <label class="f-label">Tipo do benefício principal</label>
+              <select id="f-tipo-beneficio">
+                <option value="">Selecione...</option>
+                <option>Aposentadoria</option>
+                <option>Pensão por Morte</option>
+                <option>Benefício por Incapacidade Temporária</option>
+                <option>Salário-Maternidade</option>
+                <option>Auxílio-Acidente</option>
+                <option>Outro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-block">
+              <label class="f-label">NB/CTC que originou a crítica</label>
+              <input type="text" id="f-nb-relacionado">
+            </div>
+            <div class="field-block">
+              <label class="f-label">OL do protocolo / Agência</label>
+              <input type="text" id="f-ol-protocolo">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field-block">
+              <label class="f-label">Servidor responsável (seu nome)</label>
+              <input type="text" id="f-servidor-nome">
+            </div>
+            <div class="field-block">
+              <label class="f-label">Matrícula</label>
+              <input type="text" id="f-servidor-matricula">
+            </div>
+          </div>
+        </section>
+
+        <!-- ETAPA 2 — TIPO DE DUPLICIDADE -->
+        <section class="wizard-step" data-step="2">
+          <p class="step-label">Etapa 2 de 6</p>
+          <h2 class="step-title">Qual situação está gerando a duplicidade?</h2>
+
+          <label class="radio-card" data-val="aposentadoria_ctc">
+            <input type="radio" name="tipo-dup" value="aposentadoria_ctc">
+            <span class="rc-text"><strong>Aposentadoria × CTC</strong><span>Certidão de Tempo de Contribuição em conflito com aposentadoria</span></span>
+          </label>
+          <label class="radio-card" data-val="pensao_ctc">
+            <input type="radio" name="tipo-dup" value="pensao_ctc">
+            <span class="rc-text"><strong>Pensão por Morte Precedida × CTC</strong><span>CTC emitida para o instituidor da pensão</span></span>
+          </label>
+          <label class="radio-card" data-val="incapacidade_ctc">
+            <input type="radio" name="tipo-dup" value="incapacidade_ctc">
+            <span class="rc-text"><strong>Benefício por Incapacidade × CTC</strong><span>B31/B91 em conflito com Certidão de Tempo de Contribuição</span></span>
+          </label>
+          <label class="radio-card" data-val="incapacidade_aa">
+            <input type="radio" name="tipo-dup" value="incapacidade_aa">
+            <span class="rc-text"><strong>Incapacidade Temporária × Auxílio-Acidente</strong><span>Benefício por incapacidade em conflito com auxílio-acidente ativo</span></span>
+          </label>
+          <label class="radio-card" data-val="apos_incapacidade">
+            <input type="radio" name="tipo-dup" value="apos_incapacidade">
+            <span class="rc-text"><strong>Aposentadoria × Benefício por Incapacidade</strong><span>Concomitância entre aposentadoria e B31</span></span>
+          </label>
+          <label class="radio-card" data-val="maternidade_incapacidade">
+            <input type="radio" name="tipo-dup" value="maternidade_incapacidade">
+            <span class="rc-text"><strong>Salário-Maternidade × Benefício por Incapacidade</strong><span>Concomitância entre B80 e B31/91</span></span>
+          </label>
+          <label class="radio-card" data-val="indevida">
+            <input type="radio" name="tipo-dup" value="indevida">
+            <span class="rc-text"><strong>Crítica que o sistema não deveria ter gerado</strong><span>Situação amparada por norma que permite a acumulação</span></span>
+          </label>
+          <label class="radio-card" data-val="outra">
+            <input type="radio" name="tipo-dup" value="outra">
+            <span class="rc-text"><strong>Outra situação</strong><span>Não coberta pelas hipóteses acima</span></span>
+          </label>
+        </section>
+
+        <!-- ETAPA 3 — ANÁLISE ESPECÍFICA -->
+        <section class="wizard-step" data-step="3">
+          <p class="step-label">Etapa 3 de 6</p>
+          <h2 class="step-title">Análise específica</h2>
+          <div id="step3-conditional"></div>
+
+          <div class="subsecao-titulo">Providências realizadas antes da solicitação</div>
+          <label class="chk-line"><input type="checkbox" id="prov-beneficio"> Benefício analisado</label>
+          <label class="chk-line"><input type="checkbox" id="prov-ctc"> CTC analisada</label>
+          <label class="chk-line"><input type="checkbox" id="prov-extrato"> Extrato de tempos conferido</label>
+          <label class="chk-line"><input type="checkbox" id="prov-periodos"> Períodos confrontados</label>
+          <label class="chk-line"><input type="checkbox" id="prov-declaracao"> Declaração do órgão de destino analisada</label>
+          <label class="chk-line"><input type="checkbox" id="prov-cancelada"> CTC cancelada</label>
+          <label class="chk-line"><input type="checkbox" id="prov-revisada"> CTC revisada</label>
+          <label class="chk-line"><input type="checkbox" id="prov-corrigido"> Benefício corrigido</label>
+          <div class="field-block" style="margin-top:10px;">
+            <label class="f-label">Descreva outras providências realizadas</label>
+            <textarea id="prov-outras" style="min-height:60px;"></textarea>
+          </div>
+        </section>
+
+        <!-- ETAPA 4 — DOCUMENTAÇÃO + SÍNTESE -->
+        <section class="wizard-step" data-step="4">
+          <p class="step-label">Etapa 4 de 6</p>
+          <h2 class="step-title">Documentação que fundamenta a solicitação</h2>
+
+          <label class="chk-line"><input type="checkbox" id="doc-extrato"> Extrato de tempos</label>
+          <label class="chk-line"><input type="checkbox" id="doc-ctc"> Cópia da CTC</label>
+          <label class="chk-line"><input type="checkbox" id="doc-declaracao"> Declaração do órgão de destino</label>
+          <label class="chk-line"><input type="checkbox" id="doc-nao-utilizacao"> Documento comprobatório da não utilização do período</label>
+          <label class="chk-line"><input type="checkbox" id="doc-parcial"> Documento comprobatório da utilização parcial</label>
+          <label class="chk-line"><input type="checkbox" id="doc-revisao"> Documento relativo à revisão da CTC</label>
+          <label class="chk-line"><input type="checkbox" id="doc-laudo"> Laudo/resultado médico-pericial</label>
+          <label class="chk-line"><input type="checkbox" id="doc-extrato-beneficio"> Extrato do benefício</label>
+
+          <div class="field-block" style="margin-top:6px;">
+            <label class="f-label">Outros documentos</label>
+            <textarea id="doc-outros" style="min-height:60px;"></textarea>
+          </div>
+
+          <div class="alert-box alert-info">
+            A solicitação de LIBDUP deve ser encaminhada devidamente instruída, permitindo ao setor responsável
+            identificar a origem da duplicidade e verificar os elementos que fundamentam o pedido.
+          </div>
+
+          <div class="subsecao-titulo">Síntese da análise realizada</div>
+          <div class="field-block">
+            <textarea id="f-sintese" placeholder="Descreva objetivamente qual duplicidade foi identificada, quais períodos/benefícios estão envolvidos, quais documentos foram analisados e quais providências foram adotadas." style="min-height:130px;"></textarea>
+          </div>
+          <div id="sintese-warning"></div>
+        </section>
+
+        <!-- ETAPA 5 — CONFERÊNCIA -->
+        <section class="wizard-step" data-step="5">
+          <p class="step-label">Etapa 5 de 6</p>
+          <h2 class="step-title">Conferência da solicitação</h2>
+          <div id="conferencia-resumo"></div>
+
+          <div class="subsecao-titulo">A documentação anexada permite demonstrar a situação descrita?</div>
+          <label class="radio-card"><input type="radio" name="doc-suficiente" value="sim"><span class="rc-text"><strong>Sim</strong></span></label>
+          <label class="radio-card"><input type="radio" name="doc-suficiente" value="complementar"><span class="rc-text"><strong>Preciso complementar</strong></span></label>
+          <label class="radio-card"><input type="radio" name="doc-suficiente" value="nao"><span class="rc-text"><strong>Não</strong></span></label>
+          <div id="conferencia-alerta"></div>
+        </section>
+
+        <!-- ETAPA 6 — DESPACHO GERADO -->
+        <section class="wizard-step" data-step="6">
+          <p class="step-label">Etapa 6 de 6</p>
+          <h2 class="step-title">Despacho gerado</h2>
+          <textarea id="resultado-libdup" readonly></textarea>
+          <div class="result-actions">
+            <button type="button" class="btn btn-copiar-libdup" onclick="copiarLibdup(this)">Copiar despacho</button>
+            <button type="button" class="btn btn-novo" onclick="novoDespachoLibdup()">Novo despacho LIBDUP</button>
+          </div>
+        </section>
+
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-voltar" id="btn-voltar" onclick="voltarEtapa()">← Voltar</button>
+          <button type="button" class="btn btn-proximo" id="btn-proximo" onclick="avancarEtapa()">Próximo →</button>
+        </div>
+
+      </div>
+
+      <footer class="site-footer">
+        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> / SARD BI GEXSTM · Baseado no Manual LIBDUP (SR Sul)
+      </footer>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   ESTADO
+   ========================================================================= */
+let etapaAtual = 1;
+const TOTAL_ETAPAS = 6;
+
+const dados = {
+  tipoDuplicidade: null
+};
+
+/* =========================================================================
+   BARRA DE PROGRESSO
+   ========================================================================= */
+function montarProgresso() {
+  const el = document.getElementById('wizard-progress');
+  el.innerHTML = '';
+  for (let i = 1; i <= TOTAL_ETAPAS; i++) {
+    const step = document.createElement('div');
+    step.className = 'wp-step';
+    step.textContent = i;
+    if (i < etapaAtual) step.classList.add('done');
+    if (i === etapaAtual) step.classList.add('current');
+    el.appendChild(step);
+    if (i < TOTAL_ETAPAS) {
+      const line = document.createElement('div');
+      line.className = 'wp-line' + (i < etapaAtual ? ' done' : '');
+      el.appendChild(line);
+    }
+  }
+}
+
+function mostrarEtapa(n) {
+  document.querySelectorAll('.wizard-step').forEach(s => {
+    s.classList.toggle('active', parseInt(s.dataset.step) === n);
+  });
+  document.getElementById('btn-voltar').style.visibility = (n === 1) ? 'hidden' : 'visible';
+  document.getElementById('btn-proximo').style.display = (n === TOTAL_ETAPAS) ? 'none' : 'inline-block';
+  document.querySelector('.wizard-nav').style.display = (n === TOTAL_ETAPAS) ? 'none' : 'flex';
+  montarProgresso();
+
+  if (n === 3) renderStep3();
+  if (n === 5) renderConferencia();
+  if (n === 6) gerarDespachoLibdup();
+}
+
+function avancarEtapa() {
+  if (!validarEtapa(etapaAtual)) return;
+  if (etapaAtual < TOTAL_ETAPAS) {
+    etapaAtual++;
+    mostrarEtapa(etapaAtual);
+    window.scrollTo({top: document.querySelector('.container').offsetTop - 20, behavior: 'smooth'});
+  }
+}
+
+function voltarEtapa() {
+  if (etapaAtual > 1) {
+    etapaAtual--;
+    mostrarEtapa(etapaAtual);
+  }
+}
+
+function validarEtapa(n) {
+  if (n === 2) {
+    const sel = document.querySelector('input[name="tipo-dup"]:checked');
+    if (!sel) {
+      alert('Selecione qual situação está gerando a duplicidade antes de continuar.');
+      return false;
+    }
+    dados.tipoDuplicidade = sel.value;
+  }
+  if (n === 4) {
+    const sintese = document.getElementById('f-sintese').value.trim();
+    if (sintese === '') {
+      alert('Informações insuficientes para formalização segura da solicitação.\n\nDescreva a síntese da análise realizada antes de continuar — o despacho não deve ser gerado vazio ou genérico demais.');
+      return false;
+    }
+  }
+  return true;
+}
+
+/* =========================================================================
+   ETAPA 3 — CONTEÚDO CONDICIONAL POR TIPO DE DUPLICIDADE
+   Fonte: Manual LIBDUP - Serviço de Reconhecimento de Direitos - SR Sul
+   ========================================================================= */
+function renderStep3() {
+  const box = document.getElementById('step3-conditional');
+  const tipo = dados.tipoDuplicidade;
+  box.innerHTML = '';
+
+  if (tipo === 'aposentadoria_ctc' || tipo === 'pensao_ctc') {
+    box.innerHTML = htmlCtcGenerico(tipo);
+  } else if (tipo === 'incapacidade_ctc') {
+    box.innerHTML = htmlIncapacidadeCtc();
+  } else if (tipo === 'incapacidade_aa') {
+    box.innerHTML = htmlIncapacidadeAA();
+  } else if (tipo === 'apos_incapacidade') {
+    box.innerHTML = htmlAposIncapacidade();
+  } else if (tipo === 'maternidade_incapacidade') {
+    box.innerHTML = htmlMaternidadeIncapacidade();
+  } else if (tipo === 'indevida') {
+    box.innerHTML = htmlIndevida();
+  } else if (tipo === 'outra') {
+    box.innerHTML = htmlOutra();
+  }
+
+  ligarEventosStep3(tipo);
+}
+
+/* ---------- CTC (Aposentadoria ou Pensão Precedida) ---------- */
+function htmlCtcGenerico(tipo) {
+  let html = `
+    <div class="field-block">
+      <label class="f-label">Situação da CTC quanto à utilização dos períodos</label>
+      <select id="ctc-situacao">
+        <option value="presuncao">Presunção padrão — não foi necessário solicitar declaração do órgão de destino</option>
+        <option value="sem_info">CTC não contém informação sobre o aproveitamento (situação excepcional)</option>
+        <option value="nao_utilizada">Declaração obtida: nenhum período foi utilizado pelo RPPS</option>
+        <option value="parcial">Declaração obtida: apenas parte dos períodos foi utilizada</option>
+        <option value="nao_cumpriu">O interessado não cumpriu a exigência de declaração/revisão</option>
+      </select>
+    </div>
+    <div id="ctc-situacao-alerta"></div>
+
+    <label class="chk-line"><input type="checkbox" id="ctc-averbacao"> Há indícios de averbação automática (ex: aposentadoria em RPPS de Município que teve transposição de regime)</label>
+    <div id="ctc-averbacao-alerta"></div>
+
+    <div class="field-row" style="margin-top:14px;">
+      <div class="field-block">
+        <label class="f-label">Períodos utilizados</label>
+        <input type="text" id="ctc-periodos-utilizados" placeholder="Ex: 01/2010 a 06/2012">
+      </div>
+      <div class="field-block">
+        <label class="f-label">Períodos não utilizados / disponíveis</label>
+        <input type="text" id="ctc-periodos-nao-utilizados" placeholder="Ex: 07/2012 a 12/2015">
+      </div>
+    </div>
+  `;
+
+  if (tipo === 'pensao_ctc') {
+    html += `
+      <div class="field-block">
+        <label class="f-label">Situação de decadência</label>
+        <select id="ctc-decadencia">
+          <option value="sem_decadencia">Sem decadência — possível revisão de ofício</option>
+          <option value="decadencia_ctc">Decadência apenas da CTC</option>
+          <option value="decadencia_ambas">Decadência da CTC e da aposentadoria precedida</option>
+        </select>
+      </div>
+      <div id="ctc-decadencia-alerta"></div>
+    `;
+  }
+
+  return html;
+}
+
+const TEXTO_CTC_SEM_INFO = `<strong>Situação excepcional identificada.</strong> Como regra, não é exigível declaração do órgão de destino sobre a utilização dos períodos — presume-se que os períodos informados para aproveitamento foram efetivamente utilizados. Porém, quando a CTC não contém essa informação, é necessária a manifestação do órgão destinatário. Não existe sistema para consultar isso diretamente; solicite a declaração ao órgão.<span class="fonte">Fonte: Manual LIBDUP, item 1.1</span>`;
+
+const TEXTO_CTC_NAO_UTILIZADA = `<strong>Nenhum período utilizado pelo RPPS.</strong> Pode ser solicitado ao requerente o cancelamento da CTC. Com o cancelamento, os períodos retornam à disponibilidade do RGPS, eliminando a necessidade de liberação da crítica.<span class="fonte">Fonte: Manual LIBDUP, item 1.1-a</span>`;
+
+const TEXTO_CTC_PARCIAL = `<strong>Utilização parcial identificada.</strong> É necessária a revisão da certidão para que passe a constar, de forma expressa, o aproveitamento restrito aos períodos efetivamente utilizados. Crie a tarefa "Revisão de Certidão de Tempo de Contribuição", contate o SARD/GEX para atribuição, e emita exigência ao requerente (atenção ao prazo decadencial — art. 566, Livro II, Portaria DIRBEN/INSS nº 991/2022). Para a revisão, é indispensável requerimento formal de cancelamento da CTC apresentado pelo interessado (art. 562) — inclusive apresentação da CTC original, se não emitida eletronicamente.<span class="fonte">Fonte: Manual LIBDUP, item 1.1-b</span>`;
+
+const TEXTO_CTC_NAO_CUMPRIU = `<strong>Ausência de cumprimento da exigência.</strong> Entende-se possível proceder à exclusão dos períodos certificados para fins de análise do benefício e, posteriormente, realizar a liberação da crítica de duplicidade.<span class="fonte">Fonte: Manual LIBDUP, item 1.1-c</span>`;
+
+const TEXTO_AVERBACAO = `<strong>Atenção:</strong> não existe sistema para consultar diretamente se houve averbação automática. Um indício típico é a existência de aposentadoria no RPPS em Município que passou por transposição de regime. Solicite declaração do ente para confirmar.<span class="fonte">Fonte: Manual LIBDUP, item 1.1</span>`;
+
+const TEXTO_DECADENCIA_SEM = `<strong>Sem decadência.</strong> É possível a adoção de providência de ofício para correção da CTC — crie a tarefa "Revisão de Certidão de Tempo de Contribuição" (art. 562, Livro II). Posteriormente, a aposentadoria do instituidor deverá ser revisada.<span class="fonte">Fonte: Manual LIBDUP, item 1.3-a</span>`;
+
+const TEXTO_DECADENCIA_CTC = `<strong>Decadência apenas da CTC.</strong> O INSS fica impossibilitado de instaurar de ofício a revisão da certidão (art. 566, Livro II). Se for ineficaz a exigência aos dependentes requerentes da pensão para que solicitem a revisão, a regularização deve limitar-se à revisão da aposentadoria.<span class="fonte">Fonte: Manual LIBDUP, item 1.3-b</span>`;
+
+const TEXTO_DECADENCIA_AMBAS = `<strong>Decadência da CTC e da aposentadoria precedida.</strong> Pode ser realizada a liberação da crítica sem nenhuma diligência complementar — mesmo estando irregular o benefício precedente, sua revisão não deve ser admitida devido à decadência. Durante o processamento de eventual revisão, considere a subtarefa "Processo Sobrestado — código 14735".<span class="fonte">Fonte: Manual LIBDUP, item 1.3-c</span>`;
+
+/* ---------- Incapacidade x CTC ---------- */
+function htmlIncapacidadeCtc() {
+  return `
+    <div class="alert-box alert-info">
+      <strong>Benefício por Incapacidade Temporária (B31/B91) não segue os mesmos procedimentos dos benefícios programáveis.</strong>
+      Como não faz parte do rol de benefícios sujeitos à compensação previdenciária (art. 5º, Livro IX, Portaria DIRBEN/INSS nº 998/2022),
+      basta a exclusão dos períodos certificados da análise do benefício. Não é necessário solicitar declaração ao RPPS,
+      abrir revisão da CTC, ou cancelar a certidão.
+      <span class="fonte">Fonte: Manual LIBDUP, item 1.2 · Guia de Análise do Benefício por Incapacidade, item 5.3.4.1</span>
+    </div>
+    <div class="alert-box alert-warn">
+      <strong>Atenção — limitação de sistema:</strong> essa crítica não pode ser tratada no Sibe-PU (o sistema ainda não permite excluir
+      períodos de contribuição do Extrato Previdenciário por indicação do servidor). O requerimento deve ser processado no
+      <strong>Prisma</strong>, mediante solicitação de desativação da FERR SABI/SIBE no OL de abrangência.
+      <span class="fonte">Fonte: Manual LIBDUP, item 1.2</span>
+    </div>
+    <div class="field-block">
+      <label class="f-label">Períodos certificados excluídos da análise</label>
+      <input type="text" id="incap-ctc-periodos" placeholder="Ex: 01/2010 a 06/2012">
+    </div>
+  `;
+}
+
+/* ---------- Incapacidade x Auxílio-Acidente ---------- */
+function htmlIncapacidadeAA() {
+  return `
+    <div class="field-block">
+      <label class="f-label">Data do requerimento do benefício por incapacidade</label>
+      <input type="date" id="aa-data-requerimento">
+    </div>
+    <div id="aa-regime-info"></div>
+
+    <div class="field-block">
+      <label class="f-label">Houve perícia médica presencial, ou análise documental qualificada (AtestMedQ)?</label>
+      <select id="aa-pericia-presencial">
+        <option value="sim">Sim — perícia presencial ou AtestMedQ (a partir de 30/03/2026)</option>
+        <option value="nao">Não — análise documental comum (antes de 30/03/2026)</option>
+      </select>
+    </div>
+    <div id="aa-pericia-alerta"></div>
+
+    <div id="aa-bloco-cid" style="display:none;">
+      <div class="field-block">
+        <label class="f-label">O CID da incapacidade está relacionado ao acidente que originou o auxílio-acidente?</label>
+        <select id="aa-cid-relacionado">
+          <option value="nao_avaliado">Ainda não avaliado</option>
+          <option value="nao">NÃO</option>
+          <option value="sim">SIM</option>
+        </select>
+      </div>
+      <div id="aa-cid-alerta"></div>
+
+      <div id="aa-bloco-suspensao" style="display:none;">
+        <div class="field-block">
+          <label class="f-label">Houve suspensão automática do auxílio-acidente?</label>
+          <select id="aa-suspensao-automatica">
+            <option value="sim">Sim, já foi suspenso automaticamente</option>
+            <option value="nao">Não, será necessário cessar manualmente</option>
+          </select>
+        </div>
+        <div id="aa-suspensao-alerta"></div>
+      </div>
+    </div>
+
+    <label class="chk-line" style="margin-top:10px;"><input type="checkbox" id="aa-cid-diverso"> CID diverso entre os benefícios, ou auxílio-acidente concedido judicialmente</label>
+    <div id="aa-judicial-alerta"></div>
+  `;
+}
+
+/* ---------- Aposentadoria x Incapacidade ---------- */
+function htmlAposIncapacidade() {
+  return `
+    <div class="field-row">
+      <div class="field-block">
+        <label class="f-label">DIB do benefício por incapacidade (B31)</label>
+        <input type="date" id="ai-dib-incapacidade">
+      </div>
+      <div class="field-block">
+        <label class="f-label">DIB da aposentadoria</label>
+        <input type="date" id="ai-dib-aposentadoria">
+      </div>
+    </div>
+    <div class="field-block">
+      <label class="f-label">Situação atual do B31</label>
+      <select id="ai-situacao-b31">
+        <option value="ativo">Permanece ativo</option>
+        <option value="cessado">Já cessado</option>
+      </select>
+    </div>
+    <div class="field-block">
+      <label class="f-label">Caso o B31 tenha DIB posterior à aposentadoria e esteja ativo: o segurado optou pela aposentadoria?</label>
+      <select id="ai-optou-aposentadoria">
+        <option value="nao_aplica">Não se aplica a este caso</option>
+        <option value="sim">Sim, optou pela aposentadoria</option>
+        <option value="nao">Não optou / ainda em análise</option>
+      </select>
+    </div>
+    <div id="ai-alerta"></div>
+  `;
+}
+
+/* ---------- Salário-Maternidade x Incapacidade ---------- */
+function htmlMaternidadeIncapacidade() {
+  return `
+    <div class="alert-box alert-info">
+      Não cabe ofertar opção pelo benefício mais vantajoso entre salário-maternidade e benefício por incapacidade —
+      possuem fatos geradores e finalidades protetivas distintas (art. 396, caput e parágrafo único, Livro II).
+      <span class="fonte">Fonte: Manual LIBDUP, item 2.3</span>
+    </div>
+    <div class="field-row">
+      <div class="field-block">
+        <label class="f-label">DIB do B31/91</label>
+        <input type="date" id="mi-dib-b31">
+      </div>
+      <div class="field-block">
+        <label class="f-label">DIB do salário-maternidade (B80)</label>
+        <input type="date" id="mi-dib-b80">
+      </div>
+    </div>
+    <div class="field-block">
+      <label class="f-label">Situação do B31/91</label>
+      <select id="mi-situacao-b31">
+        <option value="ativo">Permanece ativo (concomitância)</option>
+        <option value="cessado">Já cessado antes da concessão do B80</option>
+      </select>
+    </div>
+    <div class="field-block" id="mi-bloco-dcb" style="display:none;">
+      <label class="f-label">A DCB original do B31/91 é posterior à cessação do B80?</label>
+      <select id="mi-dcb-posterior">
+        <option value="nao">Não</option>
+        <option value="sim">Sim</option>
+      </select>
+    </div>
+    <div id="mi-alerta"></div>
+  `;
+}
+
+/* ---------- Situação indevida ---------- */
+function htmlIndevida() {
+  return `
+    <div class="field-block">
+      <label class="f-label">Qual situação se aplica?</label>
+      <select id="ind-subtipo">
+        <option value="aa_pensao">Auxílio-Acidente e Pensão por Morte</option>
+        <option value="aa_maternidade">Auxílio-Acidente e Salário-Maternidade</option>
+        <option value="duas_pensoes">Duas Pensões por Morte (óbito dos genitores, dependente filho menor de 21 anos)</option>
+      </select>
+    </div>
+    <div id="ind-alerta"></div>
+  `;
+}
+
+/* ---------- Outra situação ---------- */
+function htmlOutra() {
+  return `
+    <div class="alert-box alert-warn">
+      Esta situação não está contemplada explicitamente no Manual LIBDUP. Descreva o máximo de detalhes possível na
+      síntese da análise (próxima etapa) — o despacho será gerado de forma mais genérica, e recomenda-se validação
+      adicional com a chefia ou setor técnico antes do encaminhamento.
+    </div>
+  `;
+}
+
+/* ---------- Eventos da etapa 3 ---------- */
+function ligarEventosStep3(tipo) {
+  if (tipo === 'aposentadoria_ctc' || tipo === 'pensao_ctc') {
+    const sel = document.getElementById('ctc-situacao');
+    const atualizarCtc = () => {
+      const map = { sem_info: TEXTO_CTC_SEM_INFO, nao_utilizada: TEXTO_CTC_NAO_UTILIZADA, parcial: TEXTO_CTC_PARCIAL, nao_cumpriu: TEXTO_CTC_NAO_CUMPRIU };
+      const txt = map[sel.value];
+      document.getElementById('ctc-situacao-alerta').innerHTML = txt ? `<div class="alert-box alert-info">${txt}</div>` : '';
+    };
+    sel.addEventListener('change', atualizarCtc);
+    atualizarCtc();
+
+    const avb = document.getElementById('ctc-averbacao');
+    avb.addEventListener('change', () => {
+      document.getElementById('ctc-averbacao-alerta').innerHTML = avb.checked ? `<div class="alert-box alert-warn">${TEXTO_AVERBACAO}</div>` : '';
+    });
+
+    if (tipo === 'pensao_ctc') {
+      const dec = document.getElementById('ctc-decadencia');
+      const atualizarDec = () => {
+        const map = { sem_decadencia: TEXTO_DECADENCIA_SEM, decadencia_ctc: TEXTO_DECADENCIA_CTC, decadencia_ambas: TEXTO_DECADENCIA_AMBAS };
+        document.getElementById('ctc-decadencia-alerta').innerHTML = `<div class="alert-box alert-info">${map[dec.value]}</div>`;
+      };
+      dec.addEventListener('change', atualizarDec);
+      atualizarDec();
+    }
+  }
+
+  if (tipo === 'incapacidade_aa') {
+    const dataReq = document.getElementById('aa-data-requerimento');
+    const infoRegime = document.getElementById('aa-regime-info');
+    dataReq.addEventListener('change', () => {
+      if (!dataReq.value) { infoRegime.innerHTML = ''; return; }
+      const marco = new Date('2026-03-30');
+      const data = new Date(dataReq.value);
+      if (data < marco) {
+        infoRegime.innerHTML = `<div class="alert-box alert-info">Requerimento sob vigência da <strong>Portaria Conjunta MPS/INSS nº 38/2023</strong> (até 29/03/2026).</div>`;
+      } else {
+        infoRegime.innerHTML = `<div class="alert-box alert-info">Requerimento sob vigência da <strong>Portaria Conjunta MPS/INSS nº 13/2026</strong> (a partir de 30/03/2026) — análise documental qualificada.</div>`;
+      }
+    });
+
+    const pericia = document.getElementById('aa-pericia-presencial');
+    const blocoCid = document.getElementById('aa-bloco-cid');
+    const periciaAlerta = document.getElementById('aa-pericia-alerta');
+    const atualizarPericia = () => {
+      if (pericia.value === 'sim') {
+        blocoCid.style.display = 'none';
+        periciaAlerta.innerHTML = `<div class="alert-box alert-info"><strong>Dispensa a análise superveniente da PMF.</strong> A avaliação da relação entre os benefícios já ocorre no momento da perícia/análise documental qualificada. Pode prosseguir com a LIBDUP, salvo se houver CID diverso ou concessão judicial (verifique abaixo).<span class="fonte">Fonte: Manual LIBDUP, item 2.1</span></div>`;
+      } else {
+        blocoCid.style.display = 'block';
+        periciaAlerta.innerHTML = `<div class="alert-box alert-warn">Sem perícia presencial, é necessário criar a subtarefa <strong>"Tarefa – Parecer Médico Pericial para avaliação da relação de BI com Auxílio-Acidente"</strong>, com preenchimento dos campos obrigatórios.<span class="fonte">Fonte: Manual LIBDUP, item 2.1</span></div>`;
+      }
+      atualizarCid();
+    };
+    pericia.addEventListener('change', atualizarPericia);
+
+    const cidSel = document.getElementById('aa-cid-relacionado');
+    const blocoSuspensao = document.getElementById('aa-bloco-suspensao');
+    const cidAlerta = document.getElementById('aa-cid-alerta');
+    function atualizarCid() {
+      if (pericia.value === 'sim') return;
+      if (cidSel.value === 'nao_avaliado') {
+        cidAlerta.innerHTML = `<div class="alert-box alert-warn">É necessário aguardar o laudo com a resposta desse campo antes de prosseguir com segurança.</div>`;
+        blocoSuspensao.style.display = 'none';
+      } else if (cidSel.value === 'nao') {
+        cidAlerta.innerHTML = `<div class="alert-box alert-info">Sem relação com o auxílio-acidente ativo. Pode prosseguir com a LIBDUP, sem procedimentos adicionais.<span class="fonte">Fonte: Manual LIBDUP, item 2.1</span></div>`;
+        blocoSuspensao.style.display = 'none';
+      } else {
+        cidAlerta.innerHTML = `<div class="alert-box alert-warn">Há relação entre os benefícios.<span class="fonte">Fonte: Manual LIBDUP, item 2.1</span></div>`;
+        blocoSuspensao.style.display = 'block';
+      }
+      atualizarSuspensao();
+    }
+    cidSel.addEventListener('change', atualizarCid);
+
+    const suspSel = document.getElementById('aa-suspensao-automatica');
+    const suspAlerta = document.getElementById('aa-suspensao-alerta');
+    function atualizarSuspensao() {
+      if (cidSel.value !== 'sim') { suspAlerta.innerHTML = ''; return; }
+      if (suspSel.value === 'nao') {
+        suspAlerta.innerHTML = `<div class="alert-box alert-warn"><strong>Cesse manualmente</strong> o auxílio-acidente antes de solicitar a liberação (Portaria Conjunta Dirben/DTI/INSS nº 32/2025). Ao liberar a duplicidade, registre na conclusão a orientação para criar a tarefa <strong>"Solicitar Pagamentos Não Recebidos"</strong>, para a Central de Manutenção ajustar os valores do período de concomitância indevida.<span class="fonte">Fonte: Manual LIBDUP, item 2.1</span></div>`;
+      } else {
+        suspAlerta.innerHTML = `<div class="alert-box alert-info">Suspensão já ocorreu automaticamente. Prossiga com a liberação da duplicidade.</div>`;
+      }
+    }
+    suspSel.addEventListener('change', atualizarSuspensao);
+
+    const cidDiverso = document.getElementById('aa-cid-diverso');
+    cidDiverso.addEventListener('change', () => {
+      document.getElementById('aa-judicial-alerta').innerHTML = cidDiverso.checked
+        ? `<div class="alert-box alert-warn"><strong>Atenção — CID diverso ou concessão judicial.</strong> A análise é de natureza médico-pericial; não conclua apenas com base em código CID. Crie a subtarefa "Tarefa – Parecer Médico Pericial para Avaliação de Relação de BI com Auxílio-Acidente (PMF Perícias)", preenchendo NBs, CIDs, espécie (B36/B94) e se a concessão foi judicial. Se judicial: exija cópia do laudo e sentença; caso não cumprido, anexe os documentos do BI de origem; a liberação só deve ocorrer após manifestação conclusiva da PMF de que os benefícios têm fatos geradores distintos (art. 639, VII, IN PRES/INSS 128/2022).<span class="fonte">Fonte: Manual LIBDUP, item 2.1</span></div>`
+        : '';
+    });
+
+    atualizarPericia();
+  }
+
+  if (tipo === 'apos_incapacidade') {
+    const situacao = document.getElementById('ai-situacao-b31');
+    const optou = document.getElementById('ai-optou-aposentadoria');
+    const alerta = document.getElementById('ai-alerta');
+    const atualizar = () => {
+      if (optou.value === 'sim') {
+        alerta.innerHTML = `<div class="alert-box alert-info"><strong>Opção pelo benefício mais vantajoso.</strong> Cesse o B31 na DIB, desconte os valores incompatíveis recebidos, e libere a crítica via LIBDUP.<span class="fonte">Fonte: Manual LIBDUP, item 2.2-c</span></div>`;
+      } else if (situacao.value === 'ativo') {
+        alerta.innerHTML = `<div class="alert-box alert-info">Ajuste a DCB do B31 para o dia imediatamente anterior à DIB da aposentadoria, efetue o desconto dos valores recebidos indevidamente, e libere a crítica via LIBDUP. Se necessário, solicite a alteração da DCB ao SEST-MAN mediante a tarefa ATUEXC.<span class="fonte">Fonte: Manual LIBDUP, item 2.2-a</span></div>`;
+      } else {
+        alerta.innerHTML = `<div class="alert-box alert-info">Não será necessária alteração de DCB — apenas os ajustes financeiros cabíveis, tratados exclusivamente mediante LIBDUP.<span class="fonte">Fonte: Manual LIBDUP, item 2.2-b</span></div>`;
+      }
+    };
+    situacao.addEventListener('change', atualizar);
+    optou.addEventListener('change', atualizar);
+    atualizar();
+  }
+
+  if (tipo === 'maternidade_incapacidade') {
+    const situacao = document.getElementById('mi-situacao-b31');
+    const blocoDcb = document.getElementById('mi-bloco-dcb');
+    const dcbPosterior = document.getElementById('mi-dcb-posterior');
+    const alerta = document.getElementById('mi-alerta');
+    const atualizar = () => {
+      if (situacao.value === 'ativo') {
+        blocoDcb.style.display = 'block';
+        let txt = `Ajuste a DCB do B31/91 para o dia imediatamente anterior à DIB do B80, desconte os valores recebidos indevidamente, e libere a crítica via LIBDUP.`;
+        if (dcbPosterior.value === 'sim') {
+          txt += ` Como a DCB original do B31/91 é posterior à cessação do B80, registre no despacho a orientação de que, após a cessação do salário-maternidade, a interessada poderá requerer "Solicitar pagamento de benefício não recebido" — o B31/91 será restabelecido administrativamente, sem nova perícia, mantendo a DCB originalmente fixada pela PMF.`;
+        }
+        alerta.innerHTML = `<div class="alert-box alert-info">${txt}<span class="fonte">Fonte: Manual LIBDUP, item 2.3-a</span></div>`;
+      } else {
+        blocoDcb.style.display = 'none';
+        alerta.innerHTML = `<div class="alert-box alert-info">Ajuste a DCB para o dia imediatamente anterior à DIB do B80 e realize os ajustes financeiros cabíveis. <strong>Não será necessária a utilização da funcionalidade LIBDUP</strong>, pois não haverá mais concomitância entre os benefícios.<span class="fonte">Fonte: Manual LIBDUP, item 2.3-b</span></div>`;
+      }
+    };
+    situacao.addEventListener('change', atualizar);
+    dcbPosterior.addEventListener('change', atualizar);
+    atualizar();
+  }
+
+  if (tipo === 'indevida') {
+    const sub = document.getElementById('ind-subtipo');
+    const alerta = document.getElementById('ind-alerta');
+    const map = {
+      aa_pensao: `A coexistência de Auxílio-Acidente e Pensão por Morte encontra amparo no <strong>art. 639 da IN PRES/INSS nº 128/2022</strong>. Não havendo vedação normativa quanto à acumulação dessas espécies, o sistema não deveria gerar crítica automática de duplicidade.`,
+      aa_maternidade: `A acumulação entre Auxílio-Acidente e Salário-Maternidade possui previsão normativa nos <strong>art. 13 e 104 do Decreto nº 3.048/1999</strong>, bem como nos <strong>art. 184 e 626 da IN PRES/INSS nº 128/2022</strong>. A existência simultânea não caracteriza irregularidade.`,
+      duas_pensoes: `Dependente filho menor de 21 anos que recebe duas pensões por morte decorrentes do falecimento dos genitores possui previsão de acumulação permitida, com fundamento no <strong>inciso XV do art. 639 da IN PRES/INSS nº 128/2022</strong>.`
+    };
+    const atualizar = () => {
+      alerta.innerHTML = `<div class="alert-box alert-info">${map[sub.value]} Recomenda-se registrar no despacho a sugestão de avaliação de ajuste sistêmico para evitar geração indevida de críticas futuras.<span class="fonte">Fonte: Manual LIBDUP, seção II</span></div>`;
+    };
+    sub.addEventListener('change', atualizar);
+    atualizar();
+  }
+}
+
+/* =========================================================================
+   ETAPA 5 — CONFERÊNCIA
+   ========================================================================= */
+function renderConferencia() {
+  const g = id => (document.getElementById(id) ? document.getElementById(id).value : '');
+  const rotulos = {
+    aposentadoria_ctc: 'Aposentadoria × CTC', pensao_ctc: 'Pensão por Morte Precedida × CTC',
+    incapacidade_ctc: 'Benefício por Incapacidade × CTC', incapacidade_aa: 'Incapacidade × Auxílio-Acidente',
+    apos_incapacidade: 'Aposentadoria × Incapacidade', maternidade_incapacidade: 'Salário-Maternidade × Incapacidade',
+    indevida: 'Crítica indevida', outra: 'Outra situação'
+  };
+
+  const provChecks = ['prov-beneficio','prov-ctc','prov-extrato','prov-periodos','prov-declaracao','prov-cancelada','prov-revisada','prov-corrigido'];
+  const provMarcadas = provChecks.filter(id => document.getElementById(id) && document.getElementById(id).checked).length;
+
+  const docChecks = ['doc-extrato','doc-ctc','doc-declaracao','doc-nao-utilizacao','doc-parcial','doc-revisao','doc-laudo','doc-extrato-beneficio'];
+  const docsMarcados = docChecks.filter(id => document.getElementById(id) && document.getElementById(id).checked).length;
+
+  const linhas = [
+    ['Duplicidade identificada', rotulos[dados.tipoDuplicidade] || '—'],
+    ['Benefício principal', g('f-nb-principal') || '—'],
+    ['Benefício/CTC relacionado', g('f-nb-relacionado') || '—'],
+    ['Providências marcadas', provMarcadas + ' de ' + provChecks.length],
+    ['Documentos marcados', docsMarcados + ' de ' + docChecks.length],
+  ];
+
+  document.getElementById('conferencia-resumo').innerHTML = linhas.map(l =>
+    `<div class="conf-item"><span class="k">${l[0]}</span><span class="v">${l[1]}</span></div>`
+  ).join('');
+
+  const radios = document.querySelectorAll('input[name="doc-suficiente"]');
+  radios.forEach(r => r.addEventListener('change', () => {
+    const alerta = document.getElementById('conferencia-alerta');
+    if (r.checked && r.value === 'nao') {
+      alerta.innerHTML = `<div class="alert-box alert-warn">Recomenda-se complementar a documentação antes do encaminhamento da subtarefa.</div>`;
+    } else if (r.checked && r.value === 'complementar') {
+      alerta.innerHTML = `<div class="alert-box alert-warn">Volte às etapas anteriores para complementar as informações antes de gerar o despacho final.</div>`;
+    } else {
+      document.getElementById('conferencia-alerta').innerHTML = '';
+    }
+  }));
+}
+
+/* =========================================================================
+   ETAPA 6 — GERAÇÃO DO DESPACHO
+   Modelo oficial: Manual LIBDUP, seção "2. Modelo sugerido de despacho
+   para solicitação de LIBDUP"
+   ========================================================================= */
+function gerarDespachoLibdup() {
+  const g = id => (document.getElementById(id) ? document.getElementById(id).value.trim() : '');
+  const checked = id => document.getElementById(id) && document.getElementById(id).checked;
+
+  const rotulosDescricao = {
+    aposentadoria_ctc: 'Duplicidade entre benefício de aposentadoria e Certidão de Tempo de Contribuição (CTC).',
+    pensao_ctc: 'Duplicidade entre Pensão por Morte Precedida e CTC emitida para o instituidor.',
+    incapacidade_ctc: 'Duplicidade entre Benefício por Incapacidade Temporária e Certidão de Tempo de Contribuição.',
+    incapacidade_aa: 'Duplicidade entre Benefício por Incapacidade Temporária e Auxílio-Acidente ativo.',
+    apos_incapacidade: 'Concomitância entre Aposentadoria e Benefício por Incapacidade Temporária.',
+    maternidade_incapacidade: 'Concomitância entre Salário-Maternidade e Benefício por Incapacidade Temporária.',
+    indevida: 'Crítica de duplicidade apresentada pelo sistema em hipótese amparada por norma que permite a acumulação dos benefícios.',
+    outra: 'Situação de duplicidade não enquadrada nas hipóteses típicas previstas no Manual LIBDUP.'
+  };
+
+  const provMap = {
+    'prov-beneficio': 'Benefício analisado',
+    'prov-ctc': 'CTC analisada',
+    'prov-extrato': 'Extrato de tempos conferido',
+    'prov-periodos': 'Períodos confrontados',
+    'prov-declaracao': 'Declaração do órgão de destino analisada',
+    'prov-cancelada': 'CTC cancelada',
+    'prov-revisada': 'CTC revisada',
+    'prov-corrigido': 'Benefício corrigido'
+  };
+  let providencias = Object.keys(provMap).filter(checked).map(id => '- ' + provMap[id] + ';');
+  const outrasProv = g('prov-outras');
+  if (outrasProv) providencias.push('- ' + outrasProv + ';');
+  if (providencias.length === 0) providencias.push('- (nenhuma providência específica marcada — ver síntese da análise abaixo);');
+
+  const docMap = {
+    'doc-extrato': 'Extrato de tempos',
+    'doc-ctc': 'Cópia da CTC',
+    'doc-declaracao': 'Declaração do órgão de destino',
+    'doc-nao-utilizacao': 'Documento comprobatório da não utilização do período',
+    'doc-parcial': 'Documento comprobatório da utilização parcial',
+    'doc-revisao': 'Documento relativo à revisão da CTC',
+    'doc-laudo': 'Laudo/resultado médico-pericial',
+    'doc-extrato-beneficio': 'Extrato do benefício'
+  };
+  let documentos = Object.keys(docMap).filter(checked).map(id => docMap[id]);
+  const outrosDoc = g('doc-outros');
+  if (outrosDoc) documentos.push(outrosDoc);
+
+  const sintese = g('f-sintese');
+
+  let descricao = rotulosDescricao[dados.tipoDuplicidade] || 'Duplicidade identificada no sistema.';
+  descricao += '\n\n' + sintese;
+
+  const fundamentos = {
+    aposentadoria_ctc: 'Nos termos do Manual LIBDUP (item 1.1), não é exigível a apresentação de declaração do órgão destinatário da CTC acerca da utilização dos períodos, presumindo-se, em princípio, que os períodos informados para aproveitamento foram efetivamente utilizados pelo órgão destinatário.',
+    pensao_ctc: 'Nos termos do Manual LIBDUP (item 1.3), aplicam-se à Pensão por Morte Precedida as mesmas orientações da duplicidade de Aposentadoria × CTC (item 1.1), observadas as regras específicas de decadência.',
+    incapacidade_ctc: 'Nos termos do Manual LIBDUP (item 1.2), tratando-se de benefício por incapacidade temporária (B31/B91), não se aplicam os procedimentos relativos aos benefícios programáveis, por não integrar o rol de benefícios sujeitos à compensação previdenciária (art. 5º, Livro IX, Portaria DIRBEN/INSS nº 998/2022).',
+    incapacidade_aa: 'Nos termos do Manual LIBDUP (item 2.1) e do art. 639 da IN PRES/INSS nº 128/2022, a manutenção simultânea depende da existência ou não de relação entre a incapacidade e o acidente que originou o auxílio-acidente, conforme apurado pela avaliação médico-pericial.',
+    apos_incapacidade: 'Nos termos do Manual LIBDUP (item 2.2), a análise considera a relação temporal entre a DIB do benefício por incapacidade e a DIB da aposentadoria.',
+    maternidade_incapacidade: 'Nos termos do Manual LIBDUP (item 2.3) e do art. 396, caput e parágrafo único, do Livro II das Normas Procedimentais em Matéria de Benefícios, salário-maternidade e benefício por incapacidade possuem fatos geradores e finalidades protetivas distintas, não cabendo opção pelo benefício mais vantajoso.',
+    indevida: 'Trata-se de hipótese em que a legislação previdenciária não veda a acumulação dos benefícios envolvidos, conforme fundamentação específica indicada na análise, entendendo-se que o sistema não deveria ter apresentado a crítica automática de duplicidade.',
+    outra: 'Situação não enquadrada nas hipóteses típicas do Manual LIBDUP — a fundamentação decorre integralmente da análise descrita acima, recomendando-se validação adicional antes do encaminhamento.'
+  };
+
+  let despacho = 'DESPACHO — SOLICITAÇÃO DE LIBERAÇÃO DE CRÍTICA DE DUPLICIDADE\n\n';
+  despacho += 'NB/CTC em análise: ' + (g('f-nb-principal') || '—') + '\n';
+  despacho += 'NB/CTC que originou a crítica: ' + (g('f-nb-relacionado') || '—') + '\n';
+  despacho += 'OL do protocolo do benefício/CTC em análise: ' + (g('f-ol-protocolo') || '—') + '\n\n';
+
+  despacho += 'Descrição da duplicidade identificada:\n' + descricao + '\n\n';
+
+  despacho += 'Providências administrativas adotadas:\n';
+  despacho += 'Para a instrução deste pedido, foram realizadas as seguintes ações:\n';
+  despacho += providencias.join('\n') + '\n\n';
+
+  if (documentos.length > 0) {
+    despacho += 'Documentação que instrui o pedido:\n';
+    despacho += documentos.map(d => '- ' + d + ';').join('\n') + '\n\n';
+  }
+
+  despacho += 'Razão e fundamento do pedido de liberação:\n';
+  despacho += fundamentos[dados.tipoDuplicidade] + '\n\n';
+  despacho += 'Diante do exposto, encaminha-se a presente subtarefa ao setor competente para análise e, sendo cabível, ';
+  despacho += 'liberação da duplicidade apontada, ressaltando-se que a presente unidade não está efetuando a LIBDUP, ';
+  despacho += 'cabendo ao setor responsável a análise conclusiva e eventual liberação.\n\n';
+
+  despacho += 'Servidor responsável: ' + (g('f-servidor-nome') || '—') + '\n';
+  despacho += 'Matrícula: ' + (g('f-servidor-matricula') || '—');
+
+  document.getElementById('resultado-libdup').value = despacho;
+}
+
+function copiarLibdup(btn) {
+  const ta = document.getElementById('resultado-libdup');
+  if (ta.value.trim() === '') return;
+  ta.removeAttribute('readonly');
+  ta.select();
+  ta.setSelectionRange(0, 99999);
+  try {
+    document.execCommand('copy');
+    const original = btn.innerText;
+    btn.innerText = 'Copiado! ✔️';
+    setTimeout(() => { btn.innerText = original; }, 2000);
+  } catch (err) {}
+  ta.setAttribute('readonly', true);
+  window.getSelection().removeAllRanges();
+}
+
+function novoDespachoLibdup() {
+  document.querySelectorAll('.container input[type="text"], .container input[type="date"]').forEach(el => el.value = '');
+  document.querySelectorAll('.container textarea').forEach(el => el.value = '');
+  document.querySelectorAll('.container input[type="checkbox"]').forEach(el => el.checked = false);
+  document.querySelectorAll('.container input[type="radio"]').forEach(el => el.checked = false);
+  document.querySelectorAll('.container select').forEach(el => el.selectedIndex = 0);
+  dados.tipoDuplicidade = null;
+  etapaAtual = 1;
+  mostrarEtapa(1);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+/* =========================================================================
+   INICIALIZAÇÃO
+   ========================================================================= */
+document.querySelectorAll('.radio-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('checked'));
+    card.classList.add('checked');
+  });
+});
+
+mostrarEtapa(1);
+</script>
+
+</body>
+</html>
