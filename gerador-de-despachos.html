@@ -290,7 +290,7 @@
         // 2. VÍNCULOS
         if (document.getElementById('item2').checked) {
             let info = document.getElementById('infoVinculo').value.trim();
-            despacho += "- Houve correção de vínculo empregatício no CNIS (ajustes realizados estritamente para fins de análise do direito ao benefício), observados os procedimentos de comprovação e acertos previstos na IN PRES/INSS nº 128/2022. " + (info ? "Informações: " + info + "\n" : "\n");
+                despacho += "- Houve correção de vínculo empregatício no CNIS (ajustes realizados estritamente para fins de análise do direito ao benefício), observados os procedimentos de comprovação e acertos previstos nos artigos 45 a 89 da IN PRES/INSS nº 128/2022. " + (info ? "Informações: " + info + "\n" : "\n");
         } else { despacho += "- Não houve correção de vínculo empregatício;\n"; }
 
         // 3. DUT (ITEM 5 NO FORM)
@@ -301,13 +301,13 @@
         // 4. INDIVIDUAL (ITEM 3 NO FORM)
         if (document.getElementById('item3').checked) {
             let info = document.getElementById('compCI').value.trim();
-                        despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Contribuinte Individual (ajustes realizados estritamente para fins de análise do direito ao benefício), nos termos dos artigos 90 a 97 da IN PRES/INSS nº 128/2022.\n";
+                despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Contribuinte Individual (ajustes realizados estritamente para fins de análise do direito ao benefício), nos termos dos artigos 90 a 97 da IN PRES/INSS nº 128/2022.\n";
         } else { despacho += "- Não houve ajustes de contribuições na categoria de Contribuinte Individual;\n"; }
 
         // 5. FACULTATIVO (ITEM 4 NO FORM)
         if (document.getElementById('item4').checked) {
             let info = document.getElementById('compFac').value.trim();
-                        despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Facultativo (ajustes realizados estritamente para fins de análise do direito ao benefício), nos termos dos artigos 107 a 108 da IN PRES/INSS nº 128/2022.\n";
+                despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Facultativo (ajustes realizados estritamente para fins de análise do direito ao benefício), nos termos dos artigos 107 a 108 da IN PRES/INSS nº 128/2022.\n";
         } else { despacho += "- Não houve ajustes de contribuições na categoria de Facultativo;\n"; }
 
         // 6. RURAL (ITEM 6 NO FORM)
