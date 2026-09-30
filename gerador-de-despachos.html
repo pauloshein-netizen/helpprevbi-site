@@ -301,23 +301,23 @@
         // 4. INDIVIDUAL (ITEM 3 NO FORM)
         if (document.getElementById('item3').checked) {
             let info = document.getElementById('compCI').value.trim();
-            despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Contribuinte Individual (ajustes realizados estritamente para fins de análise do direito ao benefício).\n";
+                        despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Contribuinte Individual (ajustes realizados estritamente para fins de análise do direito ao benefício), nos termos dos artigos 90 a 97 da IN PRES/INSS nº 128/2022.\n";
         } else { despacho += "- Não houve ajustes de contribuições na categoria de Contribuinte Individual;\n"; }
 
         // 5. FACULTATIVO (ITEM 4 NO FORM)
         if (document.getElementById('item4').checked) {
             let info = document.getElementById('compFac').value.trim();
-            despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Facultativo (ajustes realizados estritamente para fins de análise do direito ao benefício).\n";
+                        despacho += "- Houve complementação das competências" + (info ? " " + info : "") + " na categoria de Facultativo (ajustes realizados estritamente para fins de análise do direito ao benefício), nos termos dos artigos 107 a 108 da IN PRES/INSS nº 128/2022.\n";
         } else { despacho += "- Não houve ajustes de contribuições na categoria de Facultativo;\n"; }
 
         // 6. RURAL (ITEM 6 NO FORM)
         if (document.getElementById('item6').checked) {
             let resRural = document.getElementById('resultadoRural').value;
             let info = document.getElementById('infoRural').value.trim();
-            if (resRural === 'integral') { despacho += "- Análise de Segurado Especial: Todo o período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2026. " + (info ? "Informações: " + info + "\n" : "\n"); }
-            else if (resRural === 'parcial') { despacho += "- Análise de Segurado Especial: Somente parte do período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2026. " + (info ? "Informações: " + info + "\n" : "\n"); }
+            if (resRural === 'integral') { despacho += "- Análise de Segurado Especial: Todo o período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2022. " + (info ? "Informações: " + info + "\n" : "\n"); }
+            else if (resRural === 'parcial') { despacho += "- Análise de Segurado Especial: Somente parte do período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2022. " + (info ? "Informações: " + info + "\n" : "\n"); }
             else if (resRural === 'negado') {
-                despacho += "- Análise de Segurado Especial: Nenhum período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2026. Motivo(s) da não homologação:\n";
+                despacho += "- Análise de Segurado Especial: Nenhum período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2022. Motivo(s) da não homologação:\n";
                 let motivosMarcados = document.querySelectorAll('.chk-motivo:checked');
                 let marcouCNPJ = document.getElementById('chkCNPJRural').checked;
                 if (motivosMarcados.length > 0 || marcouCNPJ) {
