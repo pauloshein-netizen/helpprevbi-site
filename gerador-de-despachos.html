@@ -314,10 +314,10 @@
         if (document.getElementById('item6').checked) {
             let resRural = document.getElementById('resultadoRural').value;
             let info = document.getElementById('infoRural').value.trim();
-            if (resRural === 'integral') { despacho += "- Análise de Segurado Especial: Todo o período autodeclarado foi reconhecido. " + (info ? "Informações: " + info + "\n" : "\n"); }
-            else if (resRural === 'parcial') { despacho += "- Análise de Segurado Especial: Somente parte do período autodeclarado foi reconhecido. " + (info ? "Informações: " + info + "\n" : "\n"); }
+            if (resRural === 'integral') { despacho += "- Análise de Segurado Especial: Todo o período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2026. " + (info ? "Informações: " + info + "\n" : "\n"); }
+            else if (resRural === 'parcial') { despacho += "- Análise de Segurado Especial: Somente parte do período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2026. " + (info ? "Informações: " + info + "\n" : "\n"); }
             else if (resRural === 'negado') {
-                despacho += "- Análise de Segurado Especial: Nenhum período autodeclarado foi reconhecido. Motivo(s) da não homologação:\n";
+                despacho += "- Análise de Segurado Especial: Nenhum período autodeclarado foi reconhecido, conforme análise realizada nos termos dos artigos 109 a 116 da IN PRES/INSS nº 128/2026. Motivo(s) da não homologação:\n";
                 let motivosMarcados = document.querySelectorAll('.chk-motivo:checked');
                 let marcouCNPJ = document.getElementById('chkCNPJRural').checked;
                 if (motivosMarcados.length > 0 || marcouCNPJ) {
