@@ -290,7 +290,7 @@
         // 2. VÍNCULOS
         if (document.getElementById('item2').checked) {
             let info = document.getElementById('infoVinculo').value.trim();
-            despacho += "- Houve correção de vínculo empregatício no CNIS (ajustes realizados estritamente para fins de análise do direito ao benefício), realizada para fins de análise do direito ao benefício, observados os procedimentos de comprovação e acertos previstos na IN PRES/INSS nº 128/2022. " + (info ? "Informações: " + info + "\n" : "\n");
+            despacho += "- Houve correção de vínculo empregatício no CNIS (ajustes realizados estritamente para fins de análise do direito ao benefício), observados os procedimentos de comprovação e acertos previstos na IN PRES/INSS nº 128/2022. " + (info ? "Informações: " + info + "\n" : "\n");+ (info ? "Informações: " + info + "\n" : "\n");
         } else { despacho += "- Não houve correção de vínculo empregatício;\n"; }
 
         // 3. DUT (ITEM 5 NO FORM)
@@ -330,12 +330,13 @@
             }
         } else { despacho += "- Não houve análise de Segurado Especial.\n"; }
 
- // 7. RESSALVA - VÍNCULOS NÃO TRATADOS
-if (document.getElementById('item7').checked) {
-    despacho += "\n- Foram identificados vínculos e/ou informações no CNIS que não foram objeto de tratamento nesta análise. Os acertos eventualmente realizados no curso da presente análise foram efetuados exclusivamente na medida necessária à apreciação e decisão do benefício por incapacidade, considerando a necessidade de conclusão do requerimento em tempo oportuno, não abrangendo, portanto, a totalidade das inconsistências ou pendências eventualmente existentes no cadastro.\n";
+// 7. RESSALVA - VÍNCULOS NÃO TRATADOS
+        if (document.getElementById('item7').checked) {
+            despacho += "\n- Foram identificados vínculos e/ou informações no CNIS que não foram objeto de tratamento nesta análise. Os acertos eventualmente realizados no curso da presente análise foram efetuados exclusivamente na medida necessária à apreciação e decisão do benefício por incapacidade, considerando a necessidade de conclusão do requerimento em tempo oportuno, não abrangendo, portanto, a totalidade das inconsistências ou pendências eventualmente existentes no cadastro.\n";
 
-    despacho += "  Caso o requerente deseje a regularização de tais vínculos, remunerações ou demais informações constantes do CNIS que não tenham sido tratadas nesta análise, poderá solicitar uma Revisão Administrativa, observados o prazo decadencial de 10 (dez) anos e, quanto às parcelas vencidas, o prazo prescricional de 5 (cinco) anos, quando aplicáveis, nos termos da legislação previdenciária.\n";
-}
+            despacho += "  Caso o requerente deseje a regularização de tais vínculos, remunerações ou demais informações constantes do CNIS que não tenham sido tratadas nesta análise, poderá solicitar uma Revisão Administrativa, observados o prazo decadencial de 10 (dez) anos e, quanto às parcelas vencidas, o prazo prescricional de 5 (cinco) anos, quando aplicáveis, nos termos da legislação previdenciária.\n";
+        }
+    }
 
     function limparDados() {
         const textInputs = document.querySelectorAll('input[type="text"]');
