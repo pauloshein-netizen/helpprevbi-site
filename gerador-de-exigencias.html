@@ -574,6 +574,20 @@ ATENÇÃO: Você NÃO precisa ter todos eles! Apresente apenas os que você poss
         document.getElementById('grupoAposUrbanaOpcoes').style.display = "none";
     }
 
+    // Converte o texto em HTML simples (um parágrafo por linha, links clicáveis)
+    function textoParaHtml(t) {
+        const esc = function (x) {
+            return x.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        };
+        const linhas = t.split("\n").map(function (l) {
+            if (l.trim() === "") return '<p style="margin:0">&nbsp;</p>';
+            const recuo = (l.match(/^ */)[0]).length;
+            let h = esc(l.trim()).replace(/(https?:\/\/[^\s<>)]+[^\s<>).,;])/g, '<a href="$1">$1</a>');
+            return '<p style="margin:0' + (recuo ? ";margin-left:" + recuo * 6 + "px" : "") + '">' + h + "</p>";
+        });
+        return "<div>" + linhas.join("") + "</div>";
+    }
+
     function copiarTexto(btn) {
         const textarea = document.getElementById("resultado");
         if (textarea.value.trim() === "") return;
@@ -581,6 +595,14 @@ ATENÇÃO: Você NÃO precisa ter todos eles! Apresente apenas os que você poss
         textarea.removeAttribute("readonly");
         textarea.select();
         textarea.setSelectionRange(0, 99999);
+
+        const txtPlano = textarea.value;
+        const aoCopiar = function (e) {
+            e.preventDefault();
+            e.clipboardData.setData("text/plain", txtPlano);
+            e.clipboardData.setData("text/html", textoParaHtml(txtPlano));
+        };
+        document.addEventListener("copy", aoCopiar, { once: true });
 
         try {
             document.execCommand("copy");
