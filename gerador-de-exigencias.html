@@ -574,18 +574,35 @@ ATENÇÃO: Você NÃO precisa ter todos eles! Apresente apenas os que você poss
         document.getElementById('grupoAposUrbanaOpcoes').style.display = "none";
     }
 
-    // Converte o texto em HTML simples (um parágrafo por linha, links clicáveis)
+    // Converte o texto em HTML (tópicos reais, links clicáveis, sem linhas em branco duplicadas)
     function textoParaHtml(t) {
         const esc = function (x) {
             return x.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         };
-        const linhas = t.split("\n").map(function (l) {
-            if (l.trim() === "") return '<p style="margin:0">&nbsp;</p>';
-            const recuo = (l.match(/^ */)[0]).length;
-            let h = esc(l.trim()).replace(/(https?:\/\/[^\s<>)]+[^\s<>).,;])/g, '<a href="$1">$1</a>');
-            return '<p style="margin:0' + (recuo ? ";margin-left:" + recuo * 6 + "px" : "") + '">' + h + "</p>";
+        const link = function (x) {
+            return esc(x).replace(/(https?:\/\/[^\s<>)]+[^\s<>).,;])/g, '<a href="$1">$1</a>');
+        };
+        let html = "", emLista = false, ultimoVazio = true;
+        t.split("\n").forEach(function (l) {
+            const txt = l.trim();
+            const item = txt.match(/^(?:-|•)\s+(.*)$/);
+            if (item) {
+                if (!emLista) { html += '<ul style="margin:0">'; emLista = true; }
+                html += "<li>" + link(item[1]) + "</li>";
+                ultimoVazio = false;
+                return;
+            }
+            if (emLista) { html += "</ul>"; emLista = false; }
+            if (txt === "") {
+                if (!ultimoVazio) html += '<p style="margin:0">&nbsp;</p>';
+                ultimoVazio = true;
+            } else {
+                html += '<p style="margin:0">' + link(txt) + "</p>";
+                ultimoVazio = false;
+            }
         });
-        return "<div>" + linhas.join("") + "</div>";
+        if (emLista) html += "</ul>";
+        return "<div>" + html + "</div>";
     }
 
     function copiarTexto(btn) {
