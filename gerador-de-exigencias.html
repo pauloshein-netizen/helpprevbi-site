@@ -128,7 +128,7 @@
     <header class="topbar">
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" placeholder="Buscar ferramenta...">
+        <input type="text" placeholder="Buscar ferramenta..." autocomplete="off">
         <span class="kbd">CTRL K</span>
       </div>
     </header>
@@ -151,55 +151,55 @@
     <div class="container">
         <p class="instructions-line"><strong>Instruções:</strong> selecione os itens desejados para gerar o texto automaticamente.</p>
 
-        <form id="exigenciaForm">
+        <form id="exigenciaForm" autocomplete="off">
 
             <div class="secao-titulo">Pacotes Completos: Aposentadoria</div>
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAposUrbana"> Aposentadoria: Urbana</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAposUrbana" autocomplete="off"> Aposentadoria: Urbana</label></div>
 
             <div class="item-group subgrupo" id="grupoAposUrbanaOpcoes">
-                <label style="margin-bottom: 8px;"><input type="checkbox" id="chkUrbanaEspecial"> + Averbar Atividade Especial (PPP / Formulários Antigos)</label>
-                <label><input type="checkbox" id="chkUrbanaRural"> + Averbar Atividade Rural (Autodeclaração e Documentos)</label>
+                <label style="margin-bottom: 8px;"><input type="checkbox" id="chkUrbanaEspecial" autocomplete="off"> + Averbar Atividade Especial (PPP / Formulários Antigos)</label>
+                <label><input type="checkbox" id="chkUrbanaRural" autocomplete="off"> + Averbar Atividade Rural (Autodeclaração e Documentos)</label>
             </div>
 
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAposRural"> Aposentadoria: Rural</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAposRural" autocomplete="off"> Aposentadoria: Rural</label></div>
 
             <div class="secao-titulo">Pacotes Completos: Salário-Maternidade</div>
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkMatUrbano"> Salário-Maternidade: Urbano</label></div>
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkMatRural"> Salário-Maternidade: Rural</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkMatUrbano" autocomplete="off"> Salário-Maternidade: Urbano</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkMatRural" autocomplete="off"> Salário-Maternidade: Rural</label></div>
 
             <div class="secao-titulo">Pacotes Completos: Pensão por Morte</div>
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMortePrecedida"> Pensão por Morte: Precedida (Falecido já era aposentado)</label></div>
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMorteUrbano"> Pensão por Morte: Urbano (Falecido NÃO era aposentado)</label></div>
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMorteRural"> Pensão por Morte: Rural (Falecido NÃO era aposentado)</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMortePrecedida" autocomplete="off"> Pensão por Morte: Precedida (Falecido já era aposentado)</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMorteUrbano" autocomplete="off"> Pensão por Morte: Urbano (Falecido NÃO era aposentado)</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkPenMorteRural" autocomplete="off"> Pensão por Morte: Rural (Falecido NÃO era aposentado)</label></div>
 
             <div class="item-group subgrupo" id="grupoUniaoEstavelPensao">
-                <label><input type="checkbox" id="chkUniaoEstavelPensao"> + Adicionar exigência de União Estável / Dependência (Portaria 991/2022)</label>
+                <label><input type="checkbox" id="chkUniaoEstavelPensao" autocomplete="off"> + Adicionar exigência de União Estável / Dependência (Portaria 991/2022)</label>
             </div>
 
             <div class="secao-titulo">Pacotes Completos: Auxílio-Reclusão</div>
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAuxReclusaoUrbano"> Auxílio-Reclusão: Urbano</label></div>
-            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAuxReclusaoRural"> Auxílio-Reclusão: Rural</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAuxReclusaoUrbano" autocomplete="off"> Auxílio-Reclusão: Urbano</label></div>
+            <div class="item-group item-destaque"><label><input type="checkbox" id="chkAuxReclusaoRural" autocomplete="off"> Auxílio-Reclusão: Rural</label></div>
 
             <div class="item-group subgrupo" id="grupoUniaoEstavelAuxilio">
-                <label><input type="checkbox" id="chkUniaoEstavelAuxilio"> + Adicionar exigência de União Estável / Dependência (Portaria 991/2022)</label>
+                <label><input type="checkbox" id="chkUniaoEstavelAuxilio" autocomplete="off"> + Adicionar exigência de União Estável / Dependência (Portaria 991/2022)</label>
             </div>
 
             <div class="secao-titulo">Exigências Avulsas</div>
 
-            <div class="item-group"><label><input type="checkbox" id="chkID"> Documentos de Identificação</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkProcuracao"> Procuração e Identificação do Representante</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkProcDigital"> Procuração Digital sem ICP-Brasil (Assinatura Inválida)</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkAgentePublico"> Agente Público (CTC / DTC)</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkAutodeclaracao"> Autodeclaração (Rural / Pescador / Extrativista)</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkCTPS"> CTPS (Carteira de Trabalho)</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkDUT"> DUT (Afastamento eSocial / CNIS)</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkEC103Emp"> EC 103 - Empregado (Abaixo do Salário-Mínimo / Complementação)</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkEC103CI"> EC 103 - Contribuinte Individual (Abaixo do Salário-Mínimo)</label></div>
-            <div class="item-group"><label><input type="checkbox" id="chkDocRural"> Documentos Comprovação Rural (Lista Completa Art. 116)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkID" autocomplete="off"> Documentos de Identificação</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkProcuracao" autocomplete="off"> Procuração e Identificação do Representante</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkProcDigital" autocomplete="off"> Procuração Digital sem ICP-Brasil (Assinatura Inválida)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkAgentePublico" autocomplete="off"> Agente Público (CTC / DTC)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkAutodeclaracao" autocomplete="off"> Autodeclaração (Rural / Pescador / Extrativista)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkCTPS" autocomplete="off"> CTPS (Carteira de Trabalho)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkDUT" autocomplete="off"> DUT (Afastamento eSocial / CNIS)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkEC103Emp" autocomplete="off"> EC 103 - Empregado (Abaixo do Salário-Mínimo / Complementação)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkEC103CI" autocomplete="off"> EC 103 - Contribuinte Individual (Abaixo do Salário-Mínimo)</label></div>
+            <div class="item-group"><label><input type="checkbox" id="chkDocRural" autocomplete="off"> Documentos Comprovação Rural (Lista Completa Art. 116)</label></div>
         </form>
 
         <p class="result-heading">Texto gerado</p>
-        <textarea id="resultado" readonly placeholder="Selecione as exigências acima..."></textarea>
+        <textarea id="resultado" readonly placeholder="Selecione as exigências acima..." autocomplete="off"></textarea>
 
         <div class="botoes">
             <button type="button" class="btn-copiar" onclick="copiarTexto(this)">Copiar Texto</button>
@@ -208,7 +208,7 @@
     </div>
 
       <footer class="site-footer">
-        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> · Setor: SARD BI GEXSTM · Versão 4.0
+        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> · Setor: SARD BI GEXSTM · Versão 4.0<br><span class="footer-privacy">🔒 Nenhum dado digitado é enviado ou armazenado. Tudo é processado no seu navegador.</span>
       </footer>
 
     </div>

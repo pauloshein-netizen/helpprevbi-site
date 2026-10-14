@@ -123,7 +123,7 @@
     <header class="topbar">
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" placeholder="Buscar ferramenta...">
+        <input type="text" placeholder="Buscar ferramenta..." autocomplete="off">
         <span class="kbd">CTRL K</span>
       </div>
     </header>
@@ -165,35 +165,35 @@
         <div class="field-row">
           <div class="field-block">
             <label class="f-label">Benefício/CTC em análise</label>
-            <input type="text" id="s-nb-analise">
+            <input type="text" id="s-nb-analise" autocomplete="off">
           </div>
           <div class="field-block">
             <label class="f-label">Benefício/CTC que originou a crítica</label>
-            <input type="text" id="s-nb-origem">
+            <input type="text" id="s-nb-origem" autocomplete="off">
           </div>
         </div>
 
         <div class="secao-titulo">2. Análise técnica</div>
         <div class="field-block">
           <label class="f-label">Elementos analisados / fundamentação técnica específica (opcional)</label>
-          <textarea id="s-elementos" placeholder="Detalhe os elementos constantes nos autos examinados, se quiser complementar o texto padrão."></textarea>
+          <textarea id="s-elementos" placeholder="Detalhe os elementos constantes nos autos examinados, se quiser complementar o texto padrão." autocomplete="off"></textarea>
         </div>
 
-        <label class="chk-line"><input type="checkbox" id="s-judicial-chk"> Envolve determinação judicial</label>
+        <label class="chk-line"><input type="checkbox" id="s-judicial-chk" autocomplete="off"> Envolve determinação judicial</label>
         <div id="bloco-judicial">
           <div class="field-block">
             <label class="f-label">Número do processo judicial</label>
-            <input type="text" id="s-judicial-processo">
+            <input type="text" id="s-judicial-processo" autocomplete="off">
           </div>
           <div class="field-row">
             <div class="field-block">
               <label class="f-label">Unidade judiciária responsável</label>
-              <input type="text" id="s-judicial-unidade">
+              <input type="text" id="s-judicial-unidade" autocomplete="off">
             </div>
           </div>
           <div class="field-block">
             <label class="f-label">Fundamentação utilizada para cumprimento da determinação judicial</label>
-            <textarea id="s-judicial-fundamentacao"></textarea>
+            <textarea id="s-judicial-fundamentacao" autocomplete="off"></textarea>
           </div>
         </div>
 
@@ -201,11 +201,11 @@
 
         <div class="decisao-opcoes">
           <label class="decisao-card liberacao" id="card-liberacao">
-            <input type="radio" name="s-decisao" value="liberacao">
+            <input type="radio" name="s-decisao" value="liberacao" autocomplete="off">
             <span><strong>Liberação</strong><span class="desc">Não há impedimento legal ou normativo — libera a crítica via LIBDUP</span></span>
           </label>
           <label class="decisao-card manutencao" id="card-manutencao">
-            <input type="radio" name="s-decisao" value="manutencao">
+            <input type="radio" name="s-decisao" value="manutencao" autocomplete="off">
             <span><strong>Manutenção</strong><span class="desc">Há impedimento — a crítica é mantida</span></span>
           </label>
         </div>
@@ -213,11 +213,11 @@
         <div id="bloco-providencias-manutencao">
           <div class="field-block">
             <label class="f-label">Providências administrativas pertinentes (a cargo do setor responsável)</label>
-            <textarea id="s-providencias-manutencao" placeholder="Descreva, se quiser detalhar, quais providências devem ser adotadas."></textarea>
+            <textarea id="s-providencias-manutencao" placeholder="Descreva, se quiser detalhar, quais providências devem ser adotadas." autocomplete="off"></textarea>
           </div>
         </div>
 
-        <label class="chk-line" style="margin-top:10px;"><input type="checkbox" id="s-inconsistencia-chk"> Foi identificada inconsistência diversa da duplicidade durante a análise</label>
+        <label class="chk-line" style="margin-top:10px;"><input type="checkbox" id="s-inconsistencia-chk" autocomplete="off"> Foi identificada inconsistência diversa da duplicidade durante a análise</label>
         <div id="bloco-inconsistencia">
           <div class="alert-box alert-warn">
             Não cabe ao SEST-RD promover supervisão geral do processo, mas irregularidade evidente identificada
@@ -226,7 +226,7 @@
           </div>
           <div class="field-block">
             <label class="f-label">Descreva a inconsistência identificada e a providência apontada</label>
-            <textarea id="s-inconsistencia-texto"></textarea>
+            <textarea id="s-inconsistencia-texto" autocomplete="off"></textarea>
           </div>
         </div>
 
@@ -234,20 +234,20 @@
         <div class="field-row">
           <div class="field-block">
             <label class="f-label">Nome do servidor</label>
-            <input type="text" id="s-servidor-nome">
+            <input type="text" id="s-servidor-nome" autocomplete="off">
           </div>
           <div class="field-block">
             <label class="f-label">Matrícula</label>
-            <input type="text" id="s-servidor-matricula">
+            <input type="text" id="s-servidor-matricula" autocomplete="off">
           </div>
         </div>
         <div class="field-block">
           <label class="f-label">Gerência Executiva</label>
-          <input type="text" id="s-gerencia">
+          <input type="text" id="s-gerencia" autocomplete="off">
         </div>
 
         <div class="secao-titulo">Despacho gerado</div>
-        <textarea id="resultado-sestrd" readonly></textarea>
+        <textarea id="resultado-sestrd" readonly autocomplete="off"></textarea>
         <div class="botoes">
           <button type="button" class="btn btn-copiar" onclick="copiarSestrd(this)">Copiar despacho</button>
           <button type="button" class="btn btn-limpar" onclick="limparSestrd()">Limpar formulário</button>
@@ -256,7 +256,7 @@
       </div>
 
       <footer class="site-footer">
-        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> / SARD BI GEXSTM · Baseado no Manual LIBDUP (SR Sul)
+        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> / SARD BI GEXSTM · Baseado no Manual LIBDUP (SR Sul)<br><span class="footer-privacy">🔒 Nenhum dado digitado é enviado ou armazenado. Tudo é processado no seu navegador.</span>
       </footer>
 
     </div>

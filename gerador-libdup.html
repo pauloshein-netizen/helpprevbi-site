@@ -153,7 +153,7 @@
     <header class="topbar">
       <div class="search-box">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
-        <input type="text" placeholder="Buscar ferramenta...">
+        <input type="text" placeholder="Buscar ferramenta..." autocomplete="off">
         <span class="kbd">CTRL K</span>
       </div>
     </header>
@@ -191,18 +191,18 @@
           <div class="field-row">
             <div class="field-block">
               <label class="f-label">Nome do requerente/segurado</label>
-              <input type="text" id="f-nome">
+              <input type="text" id="f-nome" autocomplete="off">
             </div>
             <div class="field-block">
               <label class="f-label">CPF</label>
-              <input type="text" id="f-cpf" placeholder="000.000.000-00">
+              <input type="text" id="f-cpf" placeholder="000.000.000-00" autocomplete="off">
             </div>
           </div>
 
           <div class="field-row">
             <div class="field-block">
               <label class="f-label">NB do benefício objeto da concessão</label>
-              <input type="text" id="f-nb-principal">
+              <input type="text" id="f-nb-principal" autocomplete="off">
             </div>
             <div class="field-block">
               <label class="f-label">Tipo do benefício principal</label>
@@ -221,22 +221,22 @@
           <div class="field-row">
             <div class="field-block">
               <label class="f-label">NB/CTC que originou a crítica</label>
-              <input type="text" id="f-nb-relacionado">
+              <input type="text" id="f-nb-relacionado" autocomplete="off">
             </div>
             <div class="field-block">
               <label class="f-label">OL do protocolo / Agência</label>
-              <input type="text" id="f-ol-protocolo">
+              <input type="text" id="f-ol-protocolo" autocomplete="off">
             </div>
           </div>
 
           <div class="field-row">
             <div class="field-block">
               <label class="f-label">Servidor responsável (seu nome)</label>
-              <input type="text" id="f-servidor-nome">
+              <input type="text" id="f-servidor-nome" autocomplete="off">
             </div>
             <div class="field-block">
               <label class="f-label">Matrícula</label>
-              <input type="text" id="f-servidor-matricula">
+              <input type="text" id="f-servidor-matricula" autocomplete="off">
             </div>
           </div>
         </section>
@@ -247,35 +247,35 @@
           <h2 class="step-title">Qual situação está gerando a duplicidade?</h2>
 
           <label class="radio-card" data-val="aposentadoria_ctc">
-            <input type="radio" name="tipo-dup" value="aposentadoria_ctc">
+            <input type="radio" name="tipo-dup" value="aposentadoria_ctc" autocomplete="off">
             <span class="rc-text"><strong>Aposentadoria × CTC</strong><span>Certidão de Tempo de Contribuição em conflito com aposentadoria</span></span>
           </label>
           <label class="radio-card" data-val="pensao_ctc">
-            <input type="radio" name="tipo-dup" value="pensao_ctc">
+            <input type="radio" name="tipo-dup" value="pensao_ctc" autocomplete="off">
             <span class="rc-text"><strong>Pensão por Morte Precedida × CTC</strong><span>CTC emitida para o instituidor da pensão</span></span>
           </label>
           <label class="radio-card" data-val="incapacidade_ctc">
-            <input type="radio" name="tipo-dup" value="incapacidade_ctc">
+            <input type="radio" name="tipo-dup" value="incapacidade_ctc" autocomplete="off">
             <span class="rc-text"><strong>Benefício por Incapacidade × CTC</strong><span>B31/B91 em conflito com Certidão de Tempo de Contribuição</span></span>
           </label>
           <label class="radio-card" data-val="incapacidade_aa">
-            <input type="radio" name="tipo-dup" value="incapacidade_aa">
+            <input type="radio" name="tipo-dup" value="incapacidade_aa" autocomplete="off">
             <span class="rc-text"><strong>Incapacidade Temporária × Auxílio-Acidente</strong><span>Benefício por incapacidade em conflito com auxílio-acidente ativo</span></span>
           </label>
           <label class="radio-card" data-val="apos_incapacidade">
-            <input type="radio" name="tipo-dup" value="apos_incapacidade">
+            <input type="radio" name="tipo-dup" value="apos_incapacidade" autocomplete="off">
             <span class="rc-text"><strong>Aposentadoria × Benefício por Incapacidade</strong><span>Concomitância entre aposentadoria e B31</span></span>
           </label>
           <label class="radio-card" data-val="maternidade_incapacidade">
-            <input type="radio" name="tipo-dup" value="maternidade_incapacidade">
+            <input type="radio" name="tipo-dup" value="maternidade_incapacidade" autocomplete="off">
             <span class="rc-text"><strong>Salário-Maternidade × Benefício por Incapacidade</strong><span>Concomitância entre B80 e B31/91</span></span>
           </label>
           <label class="radio-card" data-val="indevida">
-            <input type="radio" name="tipo-dup" value="indevida">
+            <input type="radio" name="tipo-dup" value="indevida" autocomplete="off">
             <span class="rc-text"><strong>Crítica que o sistema não deveria ter gerado</strong><span>Situação amparada por norma que permite a acumulação</span></span>
           </label>
           <label class="radio-card" data-val="outra">
-            <input type="radio" name="tipo-dup" value="outra">
+            <input type="radio" name="tipo-dup" value="outra" autocomplete="off">
             <span class="rc-text"><strong>Outra situação</strong><span>Não coberta pelas hipóteses acima</span></span>
           </label>
         </section>
@@ -287,17 +287,17 @@
           <div id="step3-conditional"></div>
 
           <div class="subsecao-titulo">Providências realizadas antes da solicitação</div>
-          <label class="chk-line"><input type="checkbox" id="prov-beneficio"> Benefício analisado</label>
-          <label class="chk-line"><input type="checkbox" id="prov-ctc"> CTC analisada</label>
-          <label class="chk-line"><input type="checkbox" id="prov-extrato"> Extrato de tempos conferido</label>
-          <label class="chk-line"><input type="checkbox" id="prov-periodos"> Períodos confrontados</label>
-          <label class="chk-line"><input type="checkbox" id="prov-declaracao"> Declaração do órgão de destino analisada</label>
-          <label class="chk-line"><input type="checkbox" id="prov-cancelada"> CTC cancelada</label>
-          <label class="chk-line"><input type="checkbox" id="prov-revisada"> CTC revisada</label>
-          <label class="chk-line"><input type="checkbox" id="prov-corrigido"> Benefício corrigido</label>
+          <label class="chk-line"><input type="checkbox" id="prov-beneficio" autocomplete="off"> Benefício analisado</label>
+          <label class="chk-line"><input type="checkbox" id="prov-ctc" autocomplete="off"> CTC analisada</label>
+          <label class="chk-line"><input type="checkbox" id="prov-extrato" autocomplete="off"> Extrato de tempos conferido</label>
+          <label class="chk-line"><input type="checkbox" id="prov-periodos" autocomplete="off"> Períodos confrontados</label>
+          <label class="chk-line"><input type="checkbox" id="prov-declaracao" autocomplete="off"> Declaração do órgão de destino analisada</label>
+          <label class="chk-line"><input type="checkbox" id="prov-cancelada" autocomplete="off"> CTC cancelada</label>
+          <label class="chk-line"><input type="checkbox" id="prov-revisada" autocomplete="off"> CTC revisada</label>
+          <label class="chk-line"><input type="checkbox" id="prov-corrigido" autocomplete="off"> Benefício corrigido</label>
           <div class="field-block" style="margin-top:10px;">
             <label class="f-label">Descreva outras providências realizadas</label>
-            <textarea id="prov-outras" style="min-height:60px;"></textarea>
+            <textarea id="prov-outras" style="min-height:60px;" autocomplete="off"></textarea>
           </div>
         </section>
 
@@ -306,18 +306,18 @@
           <p class="step-label">Etapa 4 de 6</p>
           <h2 class="step-title">Documentação que fundamenta a solicitação</h2>
 
-          <label class="chk-line"><input type="checkbox" id="doc-extrato"> Extrato de tempos</label>
-          <label class="chk-line"><input type="checkbox" id="doc-ctc"> Cópia da CTC</label>
-          <label class="chk-line"><input type="checkbox" id="doc-declaracao"> Declaração do órgão de destino</label>
-          <label class="chk-line"><input type="checkbox" id="doc-nao-utilizacao"> Documento comprobatório da não utilização do período</label>
-          <label class="chk-line"><input type="checkbox" id="doc-parcial"> Documento comprobatório da utilização parcial</label>
-          <label class="chk-line"><input type="checkbox" id="doc-revisao"> Documento relativo à revisão da CTC</label>
-          <label class="chk-line"><input type="checkbox" id="doc-laudo"> Laudo/resultado médico-pericial</label>
-          <label class="chk-line"><input type="checkbox" id="doc-extrato-beneficio"> Extrato do benefício</label>
+          <label class="chk-line"><input type="checkbox" id="doc-extrato" autocomplete="off"> Extrato de tempos</label>
+          <label class="chk-line"><input type="checkbox" id="doc-ctc" autocomplete="off"> Cópia da CTC</label>
+          <label class="chk-line"><input type="checkbox" id="doc-declaracao" autocomplete="off"> Declaração do órgão de destino</label>
+          <label class="chk-line"><input type="checkbox" id="doc-nao-utilizacao" autocomplete="off"> Documento comprobatório da não utilização do período</label>
+          <label class="chk-line"><input type="checkbox" id="doc-parcial" autocomplete="off"> Documento comprobatório da utilização parcial</label>
+          <label class="chk-line"><input type="checkbox" id="doc-revisao" autocomplete="off"> Documento relativo à revisão da CTC</label>
+          <label class="chk-line"><input type="checkbox" id="doc-laudo" autocomplete="off"> Laudo/resultado médico-pericial</label>
+          <label class="chk-line"><input type="checkbox" id="doc-extrato-beneficio" autocomplete="off"> Extrato do benefício</label>
 
           <div class="field-block" style="margin-top:6px;">
             <label class="f-label">Outros documentos</label>
-            <textarea id="doc-outros" style="min-height:60px;"></textarea>
+            <textarea id="doc-outros" style="min-height:60px;" autocomplete="off"></textarea>
           </div>
 
           <div class="alert-box alert-info">
@@ -327,7 +327,7 @@
 
           <div class="subsecao-titulo">Síntese da análise realizada</div>
           <div class="field-block">
-            <textarea id="f-sintese" placeholder="Descreva objetivamente qual duplicidade foi identificada, quais períodos/benefícios estão envolvidos, quais documentos foram analisados e quais providências foram adotadas." style="min-height:130px;"></textarea>
+            <textarea id="f-sintese" placeholder="Descreva objetivamente qual duplicidade foi identificada, quais períodos/benefícios estão envolvidos, quais documentos foram analisados e quais providências foram adotadas." style="min-height:130px;" autocomplete="off"></textarea>
           </div>
           <div id="sintese-warning"></div>
         </section>
@@ -339,9 +339,9 @@
           <div id="conferencia-resumo"></div>
 
           <div class="subsecao-titulo">A documentação anexada permite demonstrar a situação descrita?</div>
-          <label class="radio-card"><input type="radio" name="doc-suficiente" value="sim"><span class="rc-text"><strong>Sim</strong></span></label>
-          <label class="radio-card"><input type="radio" name="doc-suficiente" value="complementar"><span class="rc-text"><strong>Preciso complementar</strong></span></label>
-          <label class="radio-card"><input type="radio" name="doc-suficiente" value="nao"><span class="rc-text"><strong>Não</strong></span></label>
+          <label class="radio-card"><input type="radio" name="doc-suficiente" value="sim" autocomplete="off"><span class="rc-text"><strong>Sim</strong></span></label>
+          <label class="radio-card"><input type="radio" name="doc-suficiente" value="complementar" autocomplete="off"><span class="rc-text"><strong>Preciso complementar</strong></span></label>
+          <label class="radio-card"><input type="radio" name="doc-suficiente" value="nao" autocomplete="off"><span class="rc-text"><strong>Não</strong></span></label>
           <div id="conferencia-alerta"></div>
         </section>
 
@@ -349,7 +349,7 @@
         <section class="wizard-step" data-step="6">
           <p class="step-label">Etapa 6 de 6</p>
           <h2 class="step-title">Despacho gerado</h2>
-          <textarea id="resultado-libdup" readonly></textarea>
+          <textarea id="resultado-libdup" readonly autocomplete="off"></textarea>
           <div class="result-actions">
             <button type="button" class="btn btn-copiar-libdup" onclick="copiarLibdup(this)">Copiar despacho</button>
             <button type="button" class="btn btn-novo" onclick="novoDespachoLibdup()">Novo despacho LIBDUP</button>
@@ -364,7 +364,7 @@
       </div>
 
       <footer class="site-footer">
-        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> / SARD BI GEXSTM · Baseado no Manual LIBDUP (SR Sul)
+        Desenvolvido por <strong>Paulo Henrique Salatti Hein</strong> / SARD BI GEXSTM · Baseado no Manual LIBDUP (SR Sul)<br><span class="footer-privacy">🔒 Nenhum dado digitado é enviado ou armazenado. Tudo é processado no seu navegador.</span>
       </footer>
 
     </div>
@@ -495,17 +495,17 @@ function htmlCtcGenerico(tipo) {
     </div>
     <div id="ctc-situacao-alerta"></div>
 
-    <label class="chk-line"><input type="checkbox" id="ctc-averbacao"> Há indícios de averbação automática (ex: aposentadoria em RPPS de Município que teve transposição de regime)</label>
+    <label class="chk-line"><input type="checkbox" id="ctc-averbacao" autocomplete="off"> Há indícios de averbação automática (ex: aposentadoria em RPPS de Município que teve transposição de regime)</label>
     <div id="ctc-averbacao-alerta"></div>
 
     <div class="field-row" style="margin-top:14px;">
       <div class="field-block">
         <label class="f-label">Períodos utilizados</label>
-        <input type="text" id="ctc-periodos-utilizados" placeholder="Ex: 01/2010 a 06/2012">
+        <input type="text" id="ctc-periodos-utilizados" placeholder="Ex: 01/2010 a 06/2012" autocomplete="off">
       </div>
       <div class="field-block">
         <label class="f-label">Períodos não utilizados / disponíveis</label>
-        <input type="text" id="ctc-periodos-nao-utilizados" placeholder="Ex: 07/2012 a 12/2015">
+        <input type="text" id="ctc-periodos-nao-utilizados" placeholder="Ex: 07/2012 a 12/2015" autocomplete="off">
       </div>
     </div>
   `;
@@ -561,7 +561,7 @@ function htmlIncapacidadeCtc() {
     </div>
     <div class="field-block">
       <label class="f-label">Períodos certificados excluídos da análise</label>
-      <input type="text" id="incap-ctc-periodos" placeholder="Ex: 01/2010 a 06/2012">
+      <input type="text" id="incap-ctc-periodos" placeholder="Ex: 01/2010 a 06/2012" autocomplete="off">
     </div>
   `;
 }
@@ -571,7 +571,7 @@ function htmlIncapacidadeAA() {
   return `
     <div class="field-block">
       <label class="f-label">Data do requerimento do benefício por incapacidade</label>
-      <input type="date" id="aa-data-requerimento">
+      <input type="date" id="aa-data-requerimento" autocomplete="off">
     </div>
     <div id="aa-regime-info"></div>
 
@@ -607,7 +607,7 @@ function htmlIncapacidadeAA() {
       </div>
     </div>
 
-    <label class="chk-line" style="margin-top:10px;"><input type="checkbox" id="aa-cid-diverso"> CID diverso entre os benefícios, ou auxílio-acidente concedido judicialmente</label>
+    <label class="chk-line" style="margin-top:10px;"><input type="checkbox" id="aa-cid-diverso" autocomplete="off"> CID diverso entre os benefícios, ou auxílio-acidente concedido judicialmente</label>
     <div id="aa-judicial-alerta"></div>
   `;
 }
@@ -618,11 +618,11 @@ function htmlAposIncapacidade() {
     <div class="field-row">
       <div class="field-block">
         <label class="f-label">DIB do benefício por incapacidade (B31)</label>
-        <input type="date" id="ai-dib-incapacidade">
+        <input type="date" id="ai-dib-incapacidade" autocomplete="off">
       </div>
       <div class="field-block">
         <label class="f-label">DIB da aposentadoria</label>
-        <input type="date" id="ai-dib-aposentadoria">
+        <input type="date" id="ai-dib-aposentadoria" autocomplete="off">
       </div>
     </div>
     <div class="field-block">
@@ -655,11 +655,11 @@ function htmlMaternidadeIncapacidade() {
     <div class="field-row">
       <div class="field-block">
         <label class="f-label">DIB do B31/91</label>
-        <input type="date" id="mi-dib-b31">
+        <input type="date" id="mi-dib-b31" autocomplete="off">
       </div>
       <div class="field-block">
         <label class="f-label">DIB do salário-maternidade (B80)</label>
-        <input type="date" id="mi-dib-b80">
+        <input type="date" id="mi-dib-b80" autocomplete="off">
       </div>
     </div>
     <div class="field-block">
